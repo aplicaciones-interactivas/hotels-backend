@@ -1,0 +1,8 @@
+{
+    "port": 8089,
+    "db": {
+        "dialect": "sqlite",
+        "storage": ":memory:",
+        "logging": false
+    }
+}

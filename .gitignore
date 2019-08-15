@@ -1,0 +1,5 @@
+/node_modules/
+/.idea/
+db.development.sqlite
+/coverage/
+/.nyc_output/
