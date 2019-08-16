@@ -1,4 +1,4 @@
-const HotelModel = require('../models').Hotel;
+const Hotel = require('../models/Hotel');
 const Op = require('sequelize').Op;
 
 module.exports = (function () {
@@ -35,12 +35,12 @@ module.exports = (function () {
     }
 
     function buscarTodos(filtros) {
-        return HotelModel.findAll(armarFiltros(filtros || {}));
+        return Hotel.findAll(armarFiltros(filtros || {}));
     }
 
     function guardar(nuevoHotel) {
         nuevoHotel.id = null;
-        return HotelModel.create(nuevoHotel).catch((err) => {
+        return Hotel.create(nuevoHotel).catch((err) => {
             throw errorNombreNoIndicado;
         }).then((hotel) => {
             return new Promise((resolve, reject) => {
@@ -50,11 +50,11 @@ module.exports = (function () {
     }
 
     function buscarPorId(id) {
-        return HotelModel.findByPk(id);
+        return Hotel.findByPk(id);
     }
 
     function borrar(id) {
-        return HotelModel.destroy({
+        return Hotel.destroy({
             where: {
                 id: id
             }
@@ -72,7 +72,7 @@ module.exports = (function () {
     }
 
     function actualizar(id, nuevoHotel) {
-        return HotelModel.update(nuevoHotel, {
+        return Hotel.update(nuevoHotel, {
             where: {
                 id: id
             }

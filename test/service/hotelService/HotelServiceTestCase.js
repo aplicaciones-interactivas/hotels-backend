@@ -47,14 +47,7 @@ module.exports = {
     guardar_conHotelValido_retornaHotelConId(done) {
         var nuevoHotel = {
             name: 'Hotel Stefanos',
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
 
         HotelService.guardar(nuevoHotel).then((hotelGuardado) => {
@@ -65,14 +58,7 @@ module.exports = {
     },
     guardar_conHotelSinNombre_lanzaError(done) {
         var nuevoHotel = {
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
         HotelService.guardar(nuevoHotel).catch((err) => {
             err.codigo.should.be.equal(2);
@@ -83,14 +69,7 @@ module.exports = {
     guardar_conHotelConNombreVacio_lanzaError(done) {
         var nuevoHotel = {
             name: '',
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
 
         HotelService.guardar(nuevoHotel).catch((err) => {
@@ -102,14 +81,7 @@ module.exports = {
     guardar_conHotelConNombreSoloEspacios_lanzaError(done) {
         var nuevoHotel = {
             name: '        ',
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
 
         HotelService.guardar(nuevoHotel).catch((err) => {
@@ -164,47 +136,25 @@ module.exports = {
     actualizar_conHotelYIdValido_retornaHotelActualizado(done) {
         let nuevoHotel = {
             name: 'Hotel Stefanos',
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
         let hotelAntes = {
             'id': 161901,
             'name': 'Hotel Santa Cruz',
-            'stars': 3,
-            'amenities': [
-                'nightclub',
-                'business-center',
-                'bathtub',
-                'newspaper',
-                'restaurant'
-            ]
+            'stars': 3
         };
         let id = 161901;
         HotelService.actualizar(id, nuevoHotel).then((hotelGuardado) => {
             nuevoHotel.id = id;
             hotelGuardado.name.should.not.be.equal(hotelAntes.name);
             hotelGuardado.stars.should.not.be.equal(hotelAntes.stars);
-            hotelGuardado.amenities.should.not.be.equal(hotelAntes.amenities);
             done();
         });
     },
     actualizar_conIdInexistente_lanzaError(done) {
         let nuevoHotel = {
             name: 'Hotel Stefanos',
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
         let id = 1619011;
         HotelService.actualizar(id, nuevoHotel).catch((err) => {
@@ -216,14 +166,7 @@ module.exports = {
     actualizar_conNombreNull_lanzaError(done) {
         let nuevoHotel = {
             name: null,
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
         let id = 161901;
         HotelService.actualizar(id, nuevoHotel).catch((err) => {
@@ -235,14 +178,7 @@ module.exports = {
     actualizar_conHotelConNombreVacio_lanzaError(done) {
         let nuevoHotel = {
             name: '',
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
         let id = 161901;
         HotelService.actualizar(id, nuevoHotel).catch((err) => {
@@ -254,14 +190,7 @@ module.exports = {
     actualizar_conHotelConNombreSoloEspacios_lanzaError(done) {
         let nuevoHotel = {
             name: '     ',
-            stars: 5,
-            amenities: [
-                'safety-box',
-                'nightclub',
-                'deep-soaking-bathtub',
-                'beach',
-                'business-center'
-            ]
+            stars: 5
         };
         let id = 161901;
         HotelService.actualizar(id, nuevoHotel).catch((err) => {

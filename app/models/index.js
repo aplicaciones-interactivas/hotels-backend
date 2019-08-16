@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const Sequelize = require("sequelize");
 const dbConfig = require("config").db;
+const Hotel = require('./Hotel');
 
 let sequelize;
 if (process.env.DATABASE_URL) {
@@ -9,22 +10,17 @@ if (process.env.DATABASE_URL) {
 } else {
     sequelize = new Sequelize(dbConfig.database, dbConfig.username, dbConfig.password, dbConfig);
 }
-let db = {};
+const models = {
+    hotel : Hotel.init(sequelize, Sequelize)
+}
 
-fs.readdirSync(__dirname).filter(function (file) {
-    return (file.indexOf(".") !== 0) && (file !== "index.js");
-}).forEach(function (file) {
-    var model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
-});
+Object.values(models)
+    .filter(model => typeof model.associate === "function")
+    .forEach(model => model.associate(models));
 
-Object.keys(db).forEach(function (modelName) {
-    if ("associate" in db[modelName]) {
-        db[modelName].associate(db);
-    }
-});
-
-db.sequelize = sequelize;
-db.Sequelize = Sequelize;
+let db = {
+    models,
+    sequelize
+}
 
 module.exports = db;
