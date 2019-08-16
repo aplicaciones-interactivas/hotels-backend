@@ -1,18 +1,16 @@
-let hotelService = require('../service/HotelService');
-
 class HotelController {
     constructor(hotelService) {
         this.hotelService = hotelService;
     }
 
     buscarTodos(req, res, next) {
-        hotelService.buscarTodos(req.query).then((hoteles) => {
+        this.hotelService.buscarTodos(req.query).then((hoteles) => {
             res.send(hoteles);
         });
     }
 
     buscarPorId(req, res, next) {
-        hotelService.buscarPorId(req.params.id).then((hotel) => {
+        this.hotelService.buscarPorId(req.params.id).then((hotel) => {
             if (hotel === null) {
                 res.status(404);
             }
@@ -21,7 +19,7 @@ class HotelController {
     }
 
     guardar(req, res, next) {
-        hotelService.guardar(req.body).then(hotel => {
+        this.hotelService.guardar(req.body).then(hotel => {
             res.status(201).json(hotel);
         }).catch(err => {
             res.status(400).json(err);
@@ -29,7 +27,7 @@ class HotelController {
     }
 
     borrar(req, res, next) {
-        hotelService.borrar(req.params.id).then(() => {
+        this.hotelService.borrar(req.params.id).then(() => {
             res.status(204).send();
         }).catch(err => {
             res.status(404).json(err);
@@ -37,7 +35,7 @@ class HotelController {
     }
 
     actualizar(req, res, next) {
-        hotelService.actualizar(req.params.id, req.body).then((hotel) => {
+        this.hotelService.actualizar(req.params.id, req.body).then((hotel) => {
             res.status(200).json(hotel);
         }).catch((err) => {
             if (err.codigo === 1) {
