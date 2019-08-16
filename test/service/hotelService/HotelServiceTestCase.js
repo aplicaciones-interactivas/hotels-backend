@@ -1,7 +1,9 @@
 const HotelService = require('../../../app/service/HotelService');
-const HotelModel = require('../../../app/models').Hotel;
+const HotelRepository = require('../../../app/repository/HotelRepository');
+const sequelize = require('sequelize');
 const assert = require('chai').assert;
-const hotelService = new HotelService();
+require('chai').should();
+const hotelService = new HotelService(new HotelRepository(sequelize));
 module.exports = {
 
     buscarTodos_conCienHotelesEnLaBase_retornaListaDeHoteles(done) {

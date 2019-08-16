@@ -1,9 +1,5 @@
-const Hotel = require('../models/Hotel');
-const Op = require('sequelize').Op;
-const _armarFiltros = Symbol('armarFiltros');
-
 class HotelService {
-    constructor() {
+    constructor(hotelRepository) {
         this.errors = {
             errorIdNoExiste: {
                 codigo: 1,
@@ -18,14 +14,16 @@ class HotelService {
                 descripcion: 'Indique el nombre del hotel'
             }
         };
+        this.hotelRepository = hotelRepository;
     }
 
     buscarTodos(filtros) {
-        return Hotel.findAll(this[_armarFiltros](filtros || {}));
+        return this.hotelRepository.buscarTodos(filtros);
     }
+
     guardar(nuevoHotel) {
         nuevoHotel.id = null;
-        return Hotel.create(nuevoHotel).catch((err) => {
+        return this.hotelRepository.guardar(nuevoHotel).catch((err) => {
             throw this.errors.errorNombreNoIndicado;
         }).then((hotel) => {
             return new Promise((resolve, reject) => {
@@ -35,56 +33,35 @@ class HotelService {
     }
 
     buscarPorId(id) {
-        return Hotel.findByPk(id);
+        return this.hotelRepository.buscarPorId(id);
     }
 
     actualizar(id, nuevoHotel) {
-        return Hotel.update(nuevoHotel, {
-            where: {
-                id: id
-            }
-        }).catch((err) => {
-            throw this.errors.errorNombreNoIndicado;
-        }).then((hotelActualizado) => {
-            if (hotelActualizado[0] !== 0) {
-                return this.buscarPorId(id);
-            } else {
-                throw this.errors.errorIdNoExiste;
-            }
-        });
+        return this.hotelRepository.actualizar(id, nuevoHotel)
+            .catch((err) => {
+                throw this.errors.errorNombreNoIndicado;
+            }).then((hotelActualizado) => {
+                if (hotelActualizado[0] !== 0) {
+                    return this.buscarPorId(id);
+                } else {
+                    throw this.errors.errorIdNoExiste;
+                }
+            });
     }
+
     borrar(id) {
-        return Hotel.destroy({
-            where: {
-                id: id
-            }
-        }).then((cantidadBorrados) => {
-            if (!id) {
-                throw this.errors.errorIdNoIndicado;
-            } else if (!cantidadBorrados) {
-                throw this.errors.errorIdNoExiste;
-            } else {
-                return new Promise((resolve, reject) => {
-                    resolve(cantidadBorrados);
-                });
-            }
-        });
-    }
-    [_armarFiltros](filtros) {
-        let where = {};
-
-        if (filtros.estrellas && filtros.estrellas.length !== 0) {
-            where.stars = filtros.estrellas;
-        }
-        if (filtros.nombre) {
-            where.name = {[Op.like]: '%' + filtros.nombre + '%'};
-        }
-
-        if (Object.keys(where).length !== 0) {
-            return {where: where};
-        } else {
-            return {};
-        }
+        return this.hotelRepository.borrar(id)
+            .then((cantidadBorrados) => {
+                if (!id) {
+                    throw this.errors.errorIdNoIndicado;
+                } else if (!cantidadBorrados) {
+                    throw this.errors.errorIdNoExiste;
+                } else {
+                    return new Promise((resolve, reject) => {
+                        resolve(cantidadBorrados);
+                    });
+                }
+            });
     }
 }
 

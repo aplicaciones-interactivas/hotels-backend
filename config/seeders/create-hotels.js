@@ -1,6 +1,5 @@
 var data = require('./data/data');
 data.forEach(function (hotel) {
-    hotel.amenities = hotel.amenities.toString();
     hotel.id = parseInt(hotel.id);
 });
 
