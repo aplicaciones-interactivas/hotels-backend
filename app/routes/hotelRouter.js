@@ -1,10 +1,16 @@
 let express = require('express');
-let router = express.Router();
 let hotelController = require('../controllers/hotelController');
 
-router.get('/', hotelController.buscarTodos);
-router.get('/:id', hotelController.buscarPorId);
-router.post('/', hotelController.guardar);
-router.delete('/:id', hotelController.borrar);
-router.put('/:id', hotelController.actualizar);
-module.exports = router;
+class HotelRouter extends express.Router{
+    constructor() {
+        super();
+        this.get('/', hotelController.buscarTodos);
+        this.get('/:id', hotelController.buscarPorId);
+        this.post('/', hotelController.guardar);
+        this.delete('/:id', hotelController.borrar);
+        this.put('/:id', hotelController.actualizar);
+    }
+}
+
+
+module.exports = HotelRouter;
