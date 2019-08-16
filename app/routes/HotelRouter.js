@@ -1,8 +1,7 @@
 let express = require('express');
-let hotelController = require('../controllers/hotelController');
 
 class HotelRouter extends express.Router{
-    constructor() {
+    constructor(hotelController) {
         super();
         this.get('/', hotelController.buscarTodos);
         this.get('/:id', hotelController.buscarPorId);
