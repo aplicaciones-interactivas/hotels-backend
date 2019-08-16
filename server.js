@@ -24,7 +24,7 @@ models.sequelize.sync().then(function () {
     app.use('/hoteles', new HotelesRouter(new HotelController(new HotelService(new HotelRepository(sequelize)))));
     app.use(express.static(path.join(__dirname, 'static')));
     app.listen(port);
-    console.log("Levantado en el puerto " + port);
+    console.log('Levantado en el puerto ' + port);
 
 });
 module.exports = app; // for testing
