@@ -8,7 +8,7 @@ data.forEach(function (hotel) {
 
 module.exports = {
     preparar: async () => {
-        db.sequelize.sync();
+        await db.sequelize.sync();
         return await HotelModel.truncate().then(() => {
             return HotelModel.bulkCreate(data);
         });

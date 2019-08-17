@@ -1,6 +1,6 @@
 const Model = require('sequelize').Model;
 
-class Hotel extends Model {
+class Amenity extends Model {
     static init(sequelize, DataTypes) {
         return super.init({
                 id: {
@@ -18,36 +18,16 @@ class Hotel extends Model {
                     validate: {
                         len: {
                             args: 1,
-                            msg: 'El nombre del hotel no puede estar vacio'
+                            msg: 'El nombre de la comodidad no puede estar vacio'
                         }
                     }
-                },
-                stars: {
-                    type: DataTypes.INTEGER,
-                    defaultValue: 1
-                },
-                address: {
-                    type: DataTypes.STRING
-                },
-                contact_email: {
-                    type: DataTypes.STRING,
-                    validate: {
-                        isEmail: true
-                    }
-                },
-                contact_phone: {
-                    type: DataTypes.STRING
                 }
-
             },
             {
-                tableName: 'hotels',
+                tableName: 'amenities',
                 sequelize
             });
     }
-    static associate(models) {
-        this.amenities = this.belongsToMany(models.amenity, {through: 'hotel_amenity'});
-    }
 }
 
-module.exports = Hotel;
+module.exports = Amenity;
