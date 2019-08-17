@@ -1,16 +1,17 @@
-const HotelModel = require('../app/models/Hotel');
-const data = require('../config/seeders/data/data');
+const Hotel = require('../app/models/Hotel');
+const Amenity = require('../app/models/Amenity');
+const dataHotel = require('../config/seeders/data/data-hotels');
+const dataAmenity = require('../config/seeders/data/data-amenities');
 const db = require('../app/models/index');
-
-data.forEach(function (hotel) {
-    hotel.id = parseInt(hotel.id);
-});
 
 module.exports = {
     preparar: async () => {
         await db.sequelize.sync();
-        return await HotelModel.truncate().then(() => {
-            return HotelModel.bulkCreate(data);
+        await Amenity.truncate().then(() => {
+            Amenity.bulkCreate(dataAmenity);
+        });
+        await Hotel.truncate().then(() => {
+            Hotel.bulkCreate(dataHotel, {include:  {model: Amenity, as: 'amenities'}});
         });
     }
 }

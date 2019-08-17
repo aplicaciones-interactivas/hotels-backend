@@ -21,6 +21,10 @@ class Amenity extends Model {
                             msg: 'El nombre de la comodidad no puede estar vacio'
                         }
                     }
+                },
+                icon: {
+                    type: DataTypes.STRING,
+                    allowNull: false
                 }
             },
             {

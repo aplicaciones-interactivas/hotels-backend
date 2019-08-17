@@ -8,6 +8,7 @@ module.exports = {
 
     buscarTodos_conCienHotelesEnLaBase_retornaListaDeHoteles(done) {
         hotelService.buscarTodos().then((hoteles) => {
+            console.log(hoteles);
             hoteles.length.should.be.eql(100);
             done();
         });

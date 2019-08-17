@@ -1,4 +1,5 @@
 const Hotel = require('../models/Hotel');
+const Amenity = require('../models/Amenity');
 const _armarFiltros = Symbol('armarFiltros');
 
 class HotelRepository {
@@ -6,7 +7,11 @@ class HotelRepository {
         this.Op = sequelize.Op;
     }
     buscarTodos(filtros) {
-        return Hotel.findAll(this[_armarFiltros](filtros || {}));
+        let options = this[_armarFiltros](filtros || {});
+        options.include = [
+            {model: Amenity, as: 'amenities'}
+        ];
+        return Hotel.findAll(options);
     }
 
     guardar(nuevoHotel) {

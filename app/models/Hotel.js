@@ -46,7 +46,7 @@ class Hotel extends Model {
             });
     }
     static associate(models) {
-        this.amenities = this.belongsToMany(models.amenity, {through: 'hotel_amenity'});
+        this.amenities = this.belongsToMany(models.amenity, {through: 'hotel_amenity', as:'amenities'});
     }
 }
 

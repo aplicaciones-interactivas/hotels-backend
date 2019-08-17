@@ -1,500 +1,501 @@
-[{
-  "id": "249942",
-  "name": "Hotel Stefanos",
-  "stars": 3
-},
+[
   {
-    "id": "161901",
+    "id": 249942,
+    "name": "Hotel Stefanos",
+    "stars": 3
+  },
+  {
+    "id": 161901,
     "name": "Hotel Santa Cruz",
     "stars": 3
   },
   {
-    "id": "161914",
+    "id": 161914,
     "name": "NM Lima Hotel",
     "stars": 4
   },
   {
-    "id": "208599",
+    "id": 208599,
     "name": "El Golf Hotel Boutique",
     "stars": 4
   },
   {
-    "id": "236309",
+    "id": 236309,
     "name": "Casa Andina Select Miraflores",
     "stars": 4
   },
   {
-    "id": "161899",
+    "id": 161899,
     "name": "Radisson Hotel Decapolis Miraflores",
     "stars": 4
   },
   {
-    "id": "104074",
+    "id": 104074,
     "name": "Antigua Miraflores Hotel",
     "stars": 3
   },
   {
-    "id": "512559",
+    "id": 512559,
     "name": "Casa Falleri Boutique Hotel",
     "stars": 3
   },
   {
-    "id": "228165",
+    "id": 228165,
     "name": "Habitat Hotel",
     "stars": 3
   },
   {
-    "id": "137536",
+    "id": 137536,
     "name": "Hotel San Blas",
     "stars": 3
   },
   {
-    "id": "266879",
+    "id": 266879,
     "name": "Palmetto Hotel Business San Borja",
     "stars": 3
   },
   {
-    "id": "19325",
+    "id": 19325,
     "name": "Foresta Hotel Lima",
     "stars": 4
   },
   {
-    "id": "427467",
+    "id": 427467,
     "name": "Royal Inca Hotel",
     "stars": 2
   },
   {
-    "id": "277990",
+    "id": 277990,
     "name": "Bayview Hotel",
     "stars": 3
   },
   {
-    "id": "90757",
+    "id": 90757,
     "name": "Casa Andina Premium Miraflores",
     "stars": 4
   },
   {
-    "id": "161890",
+    "id": 161890,
     "name": "New Corpac Hotel",
     "stars": 3
   },
   {
-    "id": "314944",
+    "id": 314944,
     "name": "Qorianka Hotel",
     "stars": 2
   },
   {
-    "id": "433932",
+    "id": 433932,
     "name": "Casa Suyay",
     "stars": 3
   },
   {
-    "id": "277988",
+    "id": 277988,
     "name": "Casa Bella Miraflores",
     "stars": 3
   },
   {
-    "id": "455161",
+    "id": 455161,
     "name": "Tierra Viva Miraflores Larco",
     "stars": 3
   },
   {
-    "id": "260342",
+    "id": 260342,
     "name": "Atton San Isidro",
     "stars": 4
   },
   {
-    "id": "488116",
+    "id": 488116,
     "name": "Urbano Apartment Miraflores Pardo",
     "stars": 3
   },
   {
-    "id": "132929",
+    "id": 132929,
     "name": "Los Tallanes Hotel & Suites",
     "stars": 3
   },
   {
-    "id": "266875",
+    "id": 266875,
     "name": "Hotel Ferre Miraflores",
     "stars": 3
   },
   {
-    "id": "411416",
+    "id": 411416,
     "name": "Arawi Lima Miraflores",
     "stars": 4
   },
   {
-    "id": "266877",
+    "id": 266877,
     "name": "Peru Star Boutique Apartments Hotel",
     "stars": 4
   },
   {
-    "id": "106682",
+    "id": 106682,
     "name": "Del Pilar Miraflores Hotel",
     "stars": 3
   },
   {
-    "id": "266911",
+    "id": 266911,
     "name": "1900 Hostel",
     "stars": 1
   },
   {
-    "id": "266878",
+    "id": 266878,
     "name": "Machu Picchu Suites",
     "stars": 3
   },
   {
-    "id": "411417",
+    "id": 411417,
     "name": "Hotel Señorial",
     "stars": 3
   },
   {
-    "id": "266871",
+    "id": 266871,
     "name": "Las Palmas",
     "stars": 3
   },
   {
-    "id": "266872",
+    "id": 266872,
     "name": "Miraflores Lodge",
     "stars": 3
   },
   {
-    "id": "266873",
+    "id": 266873,
     "name": "Casa Wayra Bed & Breakfast Miraflores",
     "stars": 3
   },
   {
-    "id": "266874",
+    "id": 266874,
     "name": "HosteLima",
     "stars": 2
   },
   {
-    "id": "266919",
+    "id": 266919,
     "name": "3B Barranco's Chic and Basic B&B",
     "stars": 3
   },
   {
-    "id": "162141",
+    "id": 162141,
     "name": "Hotel El Ducado",
     "stars": 3
   },
   {
-    "id": "266914",
+    "id": 266914,
     "name": "LYNIK La Casa de Blanca",
     "stars": 2
   },
   {
-    "id": "26396",
+    "id": 26396,
     "name": "Country Club Lima Hotel",
     "stars": 5
   },
   {
-    "id": "88527",
+    "id": 88527,
     "name": "Hotel Libertador Lima",
     "stars": 4
   },
   {
-    "id": "450977",
+    "id": 450977,
     "name": "Los Girasoles",
     "stars": 3
   },
   {
-    "id": "35715",
+    "id": 35715,
     "name": "Melia Lima",
     "stars": 4
   },
   {
-    "id": "498515",
+    "id": 498515,
     "name": "Casa Aika",
     "stars": 3
   },
   {
-    "id": "431154",
+    "id": 431154,
     "name": "Kingdom Hotel",
     "stars": 3
   },
   {
-    "id": "454496",
+    "id": 454496,
     "name": "Hotel Panamericano",
     "stars": 3
   },
   {
-    "id": "266865",
+    "id": 266865,
     "name": "Condor's House - Hostel",
     "stars": 2
   },
   {
-    "id": "266866",
+    "id": 266866,
     "name": "House Inn Backpacker",
     "stars": 2
   },
   {
-    "id": "266900",
+    "id": 266900,
     "name": "La Casa Nostra Hostel",
     "stars": 2
   },
   {
-    "id": "266867",
+    "id": 266867,
     "name": "Hotel Kamana",
     "stars": 3
   },
   {
-    "id": "91522",
+    "id": 91522,
     "name": "Embajadores Hotel",
     "stars": 3
   },
   {
-    "id": "266908",
+    "id": 266908,
     "name": "Sm Hotel And Business",
     "stars": 3
   },
   {
-    "id": "157628",
+    "id": 157628,
     "name": "Fiesta Hotel & Casino",
     "stars": 4
   },
   {
-    "id": "266903",
+    "id": 266903,
     "name": "San Isidro Inn",
     "stars": 3
   },
   {
-    "id": "266904",
+    "id": 266904,
     "name": "Posada Peregrinus",
     "stars": 2
   },
   {
-    "id": "413051",
+    "id": 413051,
     "name": "Courtyard Lima Miraflores",
     "stars": 4
   },
   {
-    "id": "76136",
+    "id": 76136,
     "name": "Hotel Estelar Miraflores",
     "stars": 4
   },
   {
-    "id": "76414",
+    "id": 76414,
     "name": "Swissôtel Lima",
     "stars": 5
   },
   {
-    "id": "473343",
+    "id": 473343,
     "name": "Luxury Hotel Inkari",
     "stars": 4
   },
   {
-    "id": "266870",
+    "id": 266870,
     "name": "La Paz Apart Hotel",
     "stars": 3
   },
   {
-    "id": "84153",
+    "id": 84153,
     "name": "Basadre Suites Boutique Hotel",
     "stars": 3
   },
   {
-    "id": "187309",
+    "id": 187309,
     "name": "Hotel Melodia",
     "stars": 3
   },
   {
-    "id": "458601",
+    "id": 458601,
     "name": "Hotel Plaza Mayor",
     "stars": 2
   },
   {
-    "id": "300212",
+    "id": 300212,
     "name": "Hotel Nobility",
     "stars": 3
   },
   {
-    "id": "187306",
+    "id": 187306,
     "name": "Casa Andina Standard Miraflores Centro",
     "stars": 3
   },
   {
-    "id": "432536",
+    "id": 432536,
     "name": "Wyndham Costa Del Sol Lima City",
     "stars": 4
   },
   {
-    "id": "27227",
+    "id": 27227,
     "name": "Sonesta Hotel El Olivar Lima",
     "stars": 4
   },
   {
-    "id": "532067",
+    "id": 532067,
     "name": "Thunderbird Hotels J.Pardo",
     "stars": 3
   },
   {
-    "id": "91274",
+    "id": 91274,
     "name": "La Hacienda Hotel Miraflores",
     "stars": 3
   },
   {
-    "id": "296187",
+    "id": 296187,
     "name": "El Angolo Lima",
     "stars": 3
   },
   {
-    "id": "161918",
+    "id": 161918,
     "name": "Hostal Porta",
     "stars": 3
   },
   {
-    "id": "227172",
+    "id": 227172,
     "name": "Hotel Novotel Lima",
     "stars": 4
   },
   {
-    "id": "277989",
+    "id": 277989,
     "name": "ibis Larco Miraflores",
     "stars": 3
   },
   {
-    "id": "234536",
+    "id": 234536,
     "name": "Miraflores Suites Centro",
     "stars": 3
   },
   {
-    "id": "161900",
+    "id": 161900,
     "name": "Radisson Hotel San Isidro",
     "stars": 4
   },
   {
-    "id": "433213",
+    "id": 433213,
     "name": "Hotel Boutique Huaca Wasi",
     "stars": 3
   },
   {
-    "id": "239304",
+    "id": 239304,
     "name": "Hotel Inka Path",
     "stars": 2
   },
   {
-    "id": "109664",
+    "id": 109664,
     "name": "Plaza del Bosque Hotel",
     "stars": 4
   },
   {
-    "id": "111046",
+    "id": 111046,
     "name": "Suites Antique Apart Hotel",
     "stars": 3
   },
   {
-    "id": "110914",
+    "id": 110914,
     "name": "Royal Park Hotel",
     "stars": 4
   },
   {
-    "id": "500017",
+    "id": 500017,
     "name": "El Faro Inn",
     "stars": 3
   },
   {
-    "id": "132928",
+    "id": 132928,
     "name": "Hotel San Agustin Riviera",
     "stars": 3
   },
   {
-    "id": "410363",
+    "id": 410363,
     "name": "Palmetto San Miguel",
     "stars": 3
   },
   {
-    "id": "161908",
+    "id": 161908,
     "name": "BTH",
     "stars": 4
   },
   {
-    "id": "137782",
+    "id": 137782,
     "name": "Thunderbird Hotels Carrera",
     "stars": 3
   },
   {
-    "id": "161909",
+    "id": 161909,
     "name": "qp Hotels Lima",
     "stars": 3
   },
   {
-    "id": "161904",
+    "id": 161904,
     "name": "Sol de Oro Hotel & Suites",
     "stars": 4
   },
   {
-    "id": "139167",
+    "id": 139167,
     "name": "Hotel Park Suites",
     "stars": 2
   },
   {
-    "id": "511549",
+    "id": 511549,
     "name": "Inkawasi Hostel Boutique",
     "stars": 2
   },
   {
-    "id": "110347",
+    "id": 110347,
     "name": "Roosevelt Hotel & Suites",
     "stars": 3
   },
   {
-    "id": "239178",
+    "id": 239178,
     "name": "The Westin Lima Hotel & Convention Center",
     "stars": 5
   },
   {
-    "id": "108545",
+    "id": 108545,
     "name": "Delfines Hotel & Convention Center",
     "stars": 4
   },
   {
-    "id": "72019",
+    "id": 72019,
     "name": "Belmond Miraflores Park",
     "stars": 5
   },
   {
-    "id": "433923",
+    "id": 433923,
     "name": "Atelier Hotel",
     "stars": 3
   },
   {
-    "id": "15102",
+    "id": 15102,
     "name": "Jose Antonio Lima",
     "stars": 4
   },
   {
-    "id": "93911",
+    "id": 93911,
     "name": "El Condado Miraflores Hotel & Suites",
     "stars": 3
   },
   {
-    "id": "132931",
+    "id": 132931,
     "name": "Suites del Bosque Hotel",
     "stars": 3
   },
   {
-    "id": "132930",
+    "id": 132930,
     "name": "Leon de Oro Inn & Suites",
     "stars": 3
   },
   {
-    "id": "161892",
+    "id": 161892,
     "name": "Sonesta Posadas del Inca Miraflores - Lima",
     "stars": 3
   },
   {
-    "id": "161891",
+    "id": 161891,
     "name": "B&B Tradiciones",
     "stars": 3
   },
   {
-    "id": "132937",
+    "id": 132937,
     "name": "Maria Angola Hotel & Centro de Convenciones",
     "stars": 3
   },
   {
-    "id": "132936",
+    "id": 132936,
     "name": "Hotel Continental",
     "stars": 3
   }

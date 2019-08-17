@@ -1,5 +1,5 @@
-var data = require('./data/data');
-data.forEach(function (hotel) {
+var dataHotels = require('./data/data-hotels');
+dataHotels.forEach(function (hotel) {
     hotel.id = parseInt(hotel.id);
 });
 
@@ -14,7 +14,7 @@ module.exports = {
             stars: Sequelize.INTEGER,
             amenities: Sequelize.STRING
         });
-        return queryInterface.bulkInsert('Hotels', data);
+        return queryInterface.bulkInsert('Hotels', dataHotels);
     },
     down: function (queryInterface, Sequelize) {
         return queryInterface
