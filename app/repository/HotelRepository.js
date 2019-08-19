@@ -15,37 +15,14 @@ class HotelRepository {
         return Hotel.findAll(options);
     }
 
-    async guardar(nuevoHotel) {
-
-        return new Promise((resolve, reject) => {
-            let hotel = Hotel.create(nuevoHotel);
-            let amenities = null;
-            if (nuevoHotel.amenities) {
-                amenities = Amenity.findAll({where: {id: nuevoHotel.amenities}});
-            }
-            Promise.all([amenities]).then(sAmenities => hotel.then(hotel => hotel.addAmenities(sAmenities[0])).then(() => hotel)
-                .then(hotel => Hotel.findByPk(hotel.id, {include: [{model: Amenity, as: 'amenities'}]})))
-                .then(resolve)
-                .catch(reject);
-        });
-     /*   return new Promise((resolve, reject) => {
-            Amenity.findAll({where: {id: nuevoHotel.amenities}})
-                .then(sAmenities => hotel.then(hotel => hotel.addAmenities(sAmenities)).then(() => hotel)
-                    .then(hotel => Hotel.findByPk(hotel.id, {include: [{model: Amenity, as: 'amenities'}]}))
-                    .then(resolve).catch(reject));
-        });
-*/
-        /*
-          const body = req.body
-    const tags = body.tags.map(tag => Tag.findOrCreate({ where: { name: tag.name }, defaults: { name: tag.name }})
-                                         .spread((tag, created) => tag))
-    User.findById(body.userId)
-        .then(() => Blog.create(body))
-        .then(blog => Promise.all(tags).then(storedTags => blog.addTags(storedTags)).then(() => blog))
-        .then(blog => Blog.findOne({ where: {id: blog.id}, include: [User, Tag]}))
-        .then(blogWithAssociations => res.json(blogWithAssociations))
-        .catch(err => res.status(400).json({ err: `User with id = [${body.userId}] doesn\'t exist.`}))
-         */
+    guardar(nuevoHotel) {
+        let hotel = Hotel.create(nuevoHotel);
+        let amenities = null;
+        if (nuevoHotel.amenities) {
+            amenities = Amenity.findAll({where: {id: nuevoHotel.amenities}});
+        }
+        return Promise.all([amenities]).then(sAmenities => hotel.then(hotel => hotel.addAmenities(sAmenities[0])).then(() => hotel)
+            .then(hotel => Hotel.findByPk(hotel.id, {include: [{model: Amenity, as: 'amenities'}]})));
     }
 
     buscarPorId(id) {
