@@ -8,7 +8,6 @@ module.exports = {
 
     buscarTodos_conCienHotelesEnLaBase_retornaListaDeHoteles(done) {
         hotelService.buscarTodos().then((hoteles) => {
-            console.log(hoteles);
             hoteles.length.should.be.eql(100);
             done();
         });
@@ -57,6 +56,20 @@ module.exports = {
         hotelService.guardar(nuevoHotel).then((hotelGuardado) => {
             hotelGuardado.id.should.not.be.undefined;
             hotelGuardado.name.should.be.equal(nuevoHotel.name);
+            done();
+        });
+    },
+    guardar_conHotelValido_conAmenities_retornaHotelConIdYAmenities(done) {
+        var nuevoHotel = {
+            name: 'Hotel Stefanos',
+            stars: 5,
+            amenities: [1,3]
+        };
+
+        hotelService.guardar(nuevoHotel).then((hotelGuardado) => {
+            hotelGuardado.id.should.not.be.undefined;
+            hotelGuardado.name.should.be.equal(nuevoHotel.name);
+            hotelGuardado.amenities.should.to.have.lengthOf(2);
             done();
         });
     },

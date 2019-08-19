@@ -23,13 +23,10 @@ class HotelService {
 
     guardar(nuevoHotel) {
         nuevoHotel.id = null;
-        return this.hotelRepository.guardar(nuevoHotel).catch((err) => {
-            throw this.errors.errorNombreNoIndicado;
-        }).then((hotel) => {
-            return new Promise((resolve, reject) => {
-                resolve(hotel);
+        return this.hotelRepository.guardar(nuevoHotel)
+            .catch((err) => {
+                throw this.errors.errorNombreNoIndicado;
             });
-        });
     }
 
     buscarPorId(id) {
