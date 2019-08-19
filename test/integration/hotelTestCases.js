@@ -83,14 +83,7 @@ module.exports = {
     postHotel_conHotelValido_retornaNuevoHotelYStatus201: (done) => {
         let hotel = {
             name: 'Hotel Santa Cruz',
-            stars: 3,
-            amenities: [
-                'nightclub',
-                'business-center',
-                'bathtub',
-                'newspaper',
-                'restaurant'
-            ]
+            stars: 3
         };
         chai.request(server)
                 .post(hotelesUri)
@@ -105,14 +98,7 @@ module.exports = {
     postHotel_conHotelInvalido_retornaStatus400: (done) => {
         let hotel = {
             name: '',
-            stars: 3,
-            amenities: [
-                'nightclub',
-                'business-center',
-                'bathtub',
-                'newspaper',
-                'restaurant'
-            ]
+            stars: 3
         };
         chai.request(server)
                 .post(hotelesUri)

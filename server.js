@@ -9,13 +9,16 @@ const queryParser = require('express-query-int');
 const models = require('./app/models');
 const path = require('path');
 const sequelize = require('sequelize');
-
 const HotelController = require('./app/controller/HotelController');
 const HotelService = require('./app/service/HotelService');
 const HotelRepository = require('./app/repository/HotelRepository');
+const morgan = require('morgan');
+const winston = require('winston');
+
 
 models.sequelize.sync().then(function () {
     app.use(cors());
+    app.use(morgan('dev',  { stream: winston.stream.write }))
     app.use(bodyParser.json());
     app.use(queryParser());
     app.use(bodyParser.urlencoded({extended: true}));

@@ -4,5 +4,13 @@
         "dialect": "sqlite",
         "storage": ":memory:",
         "logging": false
+    },
+    "logging": {
+        "console": {
+            "level": "debug",
+            "handleExceptions": true,
+            "json": false,
+            "colorize": true
+        }
     }
 }

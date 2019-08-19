@@ -1,3 +1,5 @@
+const logger = require('../config/LoggerFactory').create('HotelService');
+
 class HotelService {
     constructor(hotelRepository) {
         this.errors = {
@@ -22,6 +24,7 @@ class HotelService {
     }
 
     guardar(nuevoHotel) {
+        logger.info('Guardando hotel '+ JSON.stringify(nuevoHotel));
         nuevoHotel.id = null;
         return this.hotelRepository.guardar(nuevoHotel)
             .catch((err) => {

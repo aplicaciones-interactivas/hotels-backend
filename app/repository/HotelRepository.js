@@ -21,8 +21,9 @@ class HotelRepository {
         if (nuevoHotel.amenities) {
             amenities = Amenity.findAll({where: {id: nuevoHotel.amenities}});
         }
+        const options = {include: [{model: Amenity, as: 'amenities'}]};
         return Promise.all([amenities]).then(sAmenities => hotel.then(hotel => hotel.addAmenities(sAmenities[0])).then(() => hotel)
-            .then(hotel => Hotel.findByPk(hotel.id, {include: [{model: Amenity, as: 'amenities'}]})));
+            .then(hotel => Hotel.findByPk(hotel.id, options)));
     }
 
     buscarPorId(id) {
