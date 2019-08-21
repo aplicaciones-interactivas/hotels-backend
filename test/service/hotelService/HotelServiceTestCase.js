@@ -215,5 +215,26 @@ module.exports = {
             err.descripcion.should.be.equal('Indique el nombre del hotel');
             done();
         });
+    },
+    actualizar_conAmenities_retornaHotelActualizadoConAmenities(done) {
+        let id = 161901;
+        let nuevoHotel = {
+            name: 'Hotel Stefanos',
+            stars: 5,
+            amenities: [1,3]
+        };
+        let hotelAntes = {
+            'id': id,
+            'name': 'Hotel Santa Cruz',
+            'stars': 3
+        };
+
+        hotelService.actualizar(id, nuevoHotel).then((hotelGuardado) => {
+            nuevoHotel.id = id;
+            hotelGuardado.name.should.not.be.equal(hotelAntes.name);
+            hotelGuardado.stars.should.not.be.equal(hotelAntes.stars);
+            hotelGuardado.amenities.should.to.have.lengthOf(2);
+            done();
+        });
     }
 };

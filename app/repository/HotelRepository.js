@@ -31,11 +31,16 @@ class HotelRepository {
     }
 
     actualizar(id, nuevoHotel) {
-        return Hotel.update(nuevoHotel, {
-            where: {
-                id: id
-            }
-        });
+        let amenities = null;
+        const options = {include: [{model: Amenity, as: 'amenities'}]};
+        return Hotel.update(nuevoHotel, {where: {id: id}})
+            .then(result => Hotel.findByPk(id))
+            .then(h => {
+                if (nuevoHotel.amenities) {
+                    amenities = Amenity.findAll({where: {id: nuevoHotel.amenities}});
+                }
+                return Promise.all([amenities]).then(sAmenities => h.addAmenities(sAmenities[0])).then(() => h);
+            }).then(hotel => Hotel.findByPk(hotel.id, options));
     }
 
     borrar(id) {

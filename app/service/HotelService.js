@@ -42,11 +42,10 @@ class HotelService {
             .catch((err) => {
                 throw this.errors.errorNombreNoIndicado;
             }).then((hotelActualizado) => {
-                if (hotelActualizado[0] !== 0) {
-                    return this.buscarPorId(id);
-                } else {
+                if (!hotelActualizado) {
                     throw this.errors.errorIdNoExiste;
                 }
+                return hotelActualizado;
             });
     }
 
