@@ -40,12 +40,10 @@ class HotelService {
     actualizar(id, nuevoHotel) {
         return this.hotelRepository.actualizar(id, nuevoHotel)
             .catch((err) => {
-                throw this.errors.errorNombreNoIndicado;
-            }).then((hotelActualizado) => {
-                if (!hotelActualizado) {
+                if(err.name ==="TypeError") {
                     throw this.errors.errorIdNoExiste;
                 }
-                return hotelActualizado;
+                throw this.errors.errorNombreNoIndicado;
             });
     }
 
