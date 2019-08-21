@@ -4,7 +4,6 @@ const {splat, combine, timestamp, printf} = winston.format;
 
 class LoggerFactory {
     static create(label) {
-
         const myFormat = printf(({timestamp, level, message, meta}) => {
             return `${timestamp} ${level.toUpperCase()} --- [${label}]: ${message}`;
         });

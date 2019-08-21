@@ -1,10 +1,14 @@
 process.env.NODE_ENV = 'test';
-const sequelize = require('sequelize');
-const chai = require('chai');
 
-const HotelServiceTestCases = require('./HotelServiceTestCase');
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+
+chai.use(chaiHttp);
+
 const MockBaseDeDatos = require('../../mockBaseDeDatos');
 
+
+const HotelServiceTestCases = require('./HotelServiceTestCase');
 describe('HotelService', () => {
 
     describe('buscarTodos', () => {

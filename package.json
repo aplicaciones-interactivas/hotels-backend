@@ -29,9 +29,11 @@
     "nyc": "^14.1.1"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=development ./node_modules/sequelize-cli/bin/sequelize --seeders db:seed:all && node server.js",
-    "start-prod": "cross-env NODE_ENV=production node server.js",
-    "test": "cross-env NODE_ENV=test && mocha --recursive --exit",
+    "start": "cross-env NODE_ENV=development ./node_modules/sequelize-cli/bin/sequelize --seeders db:seed:all npm run server",
+    "start-prod": "cross-env NODE_ENV=production npm run server",
+    "server": "node server.js",
+    "test": "cross-env-shell NODE_ENV=test npm run mocha",
+    "mocha": "mocha --recursive --exit",
     "jshint": "jshint app/",
     "coverage": "nyc --reporter=html --reporter=text mocha --recursive --exit"
   }
