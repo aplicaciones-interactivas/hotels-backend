@@ -25,10 +25,10 @@ describe('HotelService', () => {
         beforeEach(MockBaseDeDatos.preparar);
         it('Debe retornar nuevo hotel guardado', HotelServiceTestCases.guardar_conHotelValido_retornaHotelConId);
         it('Debe retornar nuevo hotel guardado con amenities ya guardadas', HotelServiceTestCases.guardar_conHotelValido_conAmenities_retornaHotelConIdYAmenities);
-
         it('Debe lanzar error con hotel sin nombre', HotelServiceTestCases.guardar_conHotelSinNombre_lanzaError);
         it('Debe lanzar error con hotel con nombre vacio', HotelServiceTestCases.guardar_conHotelConNombreVacio_lanzaError);
         it('Debe lanzar error con hotel con nombre solo espacios', HotelServiceTestCases.guardar_conHotelConNombreSoloEspacios_lanzaError);
+        it('Debe lanzar error por amenities invalidos', HotelServiceTestCases.guardar_conHotelValido_conAmenitiesInvalidos_lanzaError)
     });
 
     describe('buscarPorId', () => {

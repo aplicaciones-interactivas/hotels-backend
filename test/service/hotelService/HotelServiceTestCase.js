@@ -78,8 +78,9 @@ module.exports = {
             stars: 5
         };
         hotelService.guardar(nuevoHotel).catch((err) => {
-            err.codigo.should.be.equal(2);
-            err.descripcion.should.be.equal('Indique el nombre del hotel');
+            err.code.should.be.equal('400001');
+            err.name.should.be.equal('ValidationError');
+            err.toString().should.be.equal('Error=ValidationError code=400001 message:El nombre del hotel es invalido');
             done();
         });
     },
@@ -90,8 +91,9 @@ module.exports = {
         };
 
         hotelService.guardar(nuevoHotel).catch((err) => {
-            err.codigo.should.be.equal(2);
-            err.descripcion.should.be.equal('Indique el nombre del hotel');
+            err.code.should.be.equal('400001');
+            err.name.should.be.equal('ValidationError');
+            err.toString().should.be.equal('Error=ValidationError code=400001 message:El nombre del hotel es invalido');
             done();
         });
     },
@@ -102,8 +104,22 @@ module.exports = {
         };
 
         hotelService.guardar(nuevoHotel).catch((err) => {
-            err.codigo.should.be.equal(2);
-            err.descripcion.should.be.equal('Indique el nombre del hotel');
+            err.code.should.be.equal('400001');
+            err.name.should.be.equal('ValidationError');
+            err.toString().should.be.equal('Error=ValidationError code=400001 message:El nombre del hotel es invalido');
+            done();
+        });
+    },
+    guardar_conHotelValido_conAmenitiesInvalidos_lanzaError(done) {
+        let nuevoHotel = {
+            name: 'Hotel Stefanos',
+            stars: 5,
+            amenities: [10000]
+        };
+        hotelService.guardar(nuevoHotel).catch((err) => {
+            err.code.should.be.equal('400000');
+            err.name.should.be.equal('EntityNotFoundError');
+            err.toString().should.be.equal('Error=EntityNotFoundError code=400000 message:Alguno de los amenities indicados no existe');
             done();
         });
     },

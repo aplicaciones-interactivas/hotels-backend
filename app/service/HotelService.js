@@ -28,8 +28,8 @@ class HotelService {
         nuevoHotel.id = null;
         return this.hotelRepository.guardar(nuevoHotel)
             .catch((err) => {
-                logger.error('Excepcion: '+ err.name + ': ' + err.errors.map(s => s.message).join(','));
-                throw this.errors.errorNombreNoIndicado;
+                logger.error(err.toString());
+                throw err;
             });
     }
 

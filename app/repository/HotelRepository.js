@@ -1,7 +1,9 @@
 const Hotel = require('../models/Hotel');
 const Amenity = require('../models/Amenity');
+const EntityNotFoundError = require('../exception/EntityNotFoundError');
+const ValidationError = require('../exception/ValidationError');
 const _armarFiltros = Symbol('armarFiltros');
-
+const _crearRelacionConAmenities = Symbol('crearRelacionConAmenities');
 class HotelRepository {
     constructor(sequelize) {
         this.Op = sequelize.Op;
@@ -22,8 +24,21 @@ class HotelRepository {
             amenities = Amenity.findAll({where: {id: nuevoHotel.amenities}});
         }
         const options = {include: [{model: Amenity, as: 'amenities'}]};
-        return Promise.all([amenities]).then(sAmenities => hotel.then(hotel => hotel.addAmenities(sAmenities[0])).then(() => hotel)
-            .then(hotel => Hotel.findByPk(hotel.id, options)));
+        return Promise.all([amenities]).then(sAmenities => this[_crearRelacionConAmenities](hotel, sAmenities[0])
+            .then(() => hotel)
+            .then(hotel => Hotel.findByPk(hotel.id, options))
+            .catch(error => {
+                if(error.errors[0].constructor.name === 'ValidationErrorItem' && error.errors[0].path === 'name') {
+                    throw new ValidationError('El nombre del hotel es invalido');
+                }
+            }));
+    }
+
+    [_crearRelacionConAmenities](hotel, amenities) {
+        if(!(amenities && amenities.length === 0)) {
+            return hotel.then(hotel => hotel.addAmenities(amenities));
+        }
+        throw new EntityNotFoundError('Alguno de los amenities indicados no existe');
     }
 
     buscarPorId(id) {

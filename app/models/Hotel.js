@@ -17,8 +17,7 @@ class Hotel extends Model {
                     allowNull: false,
                     validate: {
                         len: {
-                            args: 1,
-                            msg: 'El nombre del hotel no puede estar vacio'
+                            args: 1
                         }
                     }
                 },
