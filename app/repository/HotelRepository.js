@@ -5,6 +5,8 @@ const ValidationError = require('../exception/ValidationError');
 const _armarFiltros = Symbol('armarFiltros');
 const _crearRelacionConAmenities = Symbol('crearRelacionConAmenities');
 const Sequelize = require('sequelize');
+
+//TODO: Cambiar SQLite por un Docker con Mysql y poner txs, por bug con sqlite, no soporta correctamente las txs
 class HotelRepository {
     constructor(sequelize) {
         this.Op = sequelize.Op;
@@ -20,6 +22,7 @@ class HotelRepository {
 
     guardar(nuevoHotel) {
         return this.handleHotelPromise(Hotel.create(nuevoHotel), nuevoHotel);
+
     }
 
     actualizar(id, nuevoHotel) {

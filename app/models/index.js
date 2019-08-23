@@ -1,9 +1,11 @@
-const fs = require("fs");
-const path = require("path");
-const Sequelize = require("sequelize");
-const dbConfig = require("config").db;
+const fs = require('fs');
+const path = require('path');
+const Sequelize = require('sequelize');
+const dbConfig = require('config').db;
 const Hotel = require('./Hotel');
 const Amenity = require('./Amenity');
+
+
 let sequelize;
 
 if (process.env.DATABASE_URL) {
@@ -17,7 +19,7 @@ const models = {
 };
 
 Object.values(models)
-    .filter(model => typeof model.associate === "function")
+    .filter(model => typeof model.associate === 'function')
     .forEach(model => model.associate(models));
 
 let db = {

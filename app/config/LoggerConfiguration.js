@@ -2,13 +2,11 @@ const winston = require('winston');
 const loggingConfig = require('config').logging;
 const {splat, combine, timestamp, printf} = winston.format;
 
-class LoggerFactory {
+class LoggerConfiguration {
     static create(label) {
         const myFormat = printf(({timestamp, level, message, meta}) => {
             return `${timestamp} ${level.toUpperCase()} --- [${label}]: ${message}`;
         });
-
-
         let winstonTransport = [];
         if (loggingConfig.console) {
             winstonTransport.push(new winston.transports.Console(loggingConfig.console));
@@ -36,4 +34,4 @@ class LoggerFactory {
     }
 }
 
-module.exports = LoggerFactory;
+module.exports = LoggerConfiguration;

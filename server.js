@@ -15,7 +15,6 @@ const HotelRepository = require('./app/repository/HotelRepository');
 const morgan = require('morgan');
 const winston = require('winston');
 
-
 models.sequelize.sync().then(function () {
     app.use(cors());
     app.use(morgan('dev',  { stream: winston.stream.write }))

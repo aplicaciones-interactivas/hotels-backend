@@ -1,4 +1,4 @@
-const logger = require('../config/LoggerFactory').create('HotelService');
+const logger = require('../config/LoggerConfiguration').create('HotelService');
 
 class HotelService {
     constructor(hotelRepository) {
