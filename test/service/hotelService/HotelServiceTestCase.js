@@ -203,8 +203,9 @@ module.exports = {
         };
         let id = 161901;
         hotelService.actualizar(id, nuevoHotel).catch((err) => {
-            err.codigo.should.be.equal(2);
-            err.descripcion.should.be.equal('Indique el nombre del hotel');
+            err.code.should.be.equal('400001');
+            err.name.should.be.equal('ValidationError');
+            err.toString().should.be.equal('Error=ValidationError code=400001 message:El nombre del hotel es invalido');
             done();
         });
     },

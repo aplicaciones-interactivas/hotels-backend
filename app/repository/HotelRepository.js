@@ -18,44 +18,60 @@ class HotelRepository {
     }
 
     guardar(nuevoHotel) {
-        let hotel = Hotel.create(nuevoHotel);
-        let amenities = null;
-        if (nuevoHotel.amenities) {
-            amenities = Amenity.findAll({where: {id: nuevoHotel.amenities}});
-        }
-        const options = {include: [{model: Amenity, as: 'amenities'}]};
-        return Promise.all([amenities]).then(sAmenities => this[_crearRelacionConAmenities](hotel, sAmenities[0])
-            .then(() => hotel)
-            .then(hotel => Hotel.findByPk(hotel.id, options))
-            .catch(error => {
-                if(error.errors[0].constructor.name === 'ValidationErrorItem' && error.errors[0].path === 'name') {
-                    throw new ValidationError('El nombre del hotel es invalido');
-                }
-            }));
+        return this.handleHotelPromise(Hotel.create(nuevoHotel), nuevoHotel);
     }
 
+    actualizar(id, nuevoHotel) {
+        return this.handleHotelPromise(Hotel.update(nuevoHotel, {where: {id: id}}).then(() => Hotel.findByPk(id)), nuevoHotel);
+    }
+
+    handleHotelPromise(promise, nuevoHotel) {
+        const optsAmenities = {
+            where: {}
+        };
+        const optsHotel = {include: [{model: Amenity, as: 'amenities'}]};
+        return promise.catch(this.handleSequelizeError).then(hotel => {
+            let amenities = null;
+            if(nuevoHotel.amenities) {
+                optsAmenities.where.id = nuevoHotel.amenities;
+                amenities = Amenity.findAll(optsAmenities)
+                    .then(amenities => this[_crearRelacionConAmenities](hotel, amenities));
+            }
+            return Promise.all([amenities]).then(() => hotel);
+        }).then(hotel => Hotel.findByPk(hotel.id, optsHotel));
+    }
+
+    handleSequelizeError(error) {
+        if(error.errors[0].constructor.name === 'ValidationErrorItem' && error.errors[0].path === 'name') {
+            throw new ValidationError('El nombre del hotel es invalido');
+        }
+    }
+
+    abc(n, h){
+        let amenities = null;
+        if (n.amenities) {
+            amenities = Amenity.findAll({where: {id: n.amenities}});
+        }
+        return Promise.all([amenities])
+            .then(sAmenities => this[_crearRelacionConAmenities](h, amenities))
+            .then(() => h);
+    }
+    /*actualizar(id, nuevoHotel) {
+        const options = {include: [{model: Amenity, as: 'amenities'}]};
+        return Hotel.update(nuevoHotel, {where: {id: id}})
+            .then(h => Hotel.findByPk(id))
+            .then(h => this.abc(nuevoHotel, h))
+            .then(() => Hotel.findByPk(id, options));
+    }*/
     [_crearRelacionConAmenities](hotel, amenities) {
         if(!(amenities && amenities.length === 0)) {
-            return hotel.then(hotel => hotel.addAmenities(amenities));
+            return hotel.addAmenities(amenities);
         }
         throw new EntityNotFoundError('Alguno de los amenities indicados no existe');
     }
 
     buscarPorId(id) {
         return Hotel.findByPk(id);
-    }
-
-    actualizar(id, nuevoHotel) {
-        let amenities = null;
-        const options = {include: [{model: Amenity, as: 'amenities'}]};
-        return Hotel.update(nuevoHotel, {where: {id: id}})
-            .then(result => Hotel.findByPk(id))
-            .then(h => {
-                if (nuevoHotel.amenities) {
-                    amenities = Amenity.findAll({where: {id: nuevoHotel.amenities}});
-                }
-                return Promise.all([amenities]).then(sAmenities => h.addAmenities(sAmenities[0])).then(() => h);
-            }).then(hotel => Hotel.findByPk(hotel.id, options));
     }
 
     borrar(id) {
