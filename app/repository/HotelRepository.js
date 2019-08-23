@@ -4,6 +4,7 @@ const EntityNotFoundError = require('../exception/EntityNotFoundError');
 const ValidationError = require('../exception/ValidationError');
 const _armarFiltros = Symbol('armarFiltros');
 const _crearRelacionConAmenities = Symbol('crearRelacionConAmenities');
+const Sequelize = require('sequelize');
 class HotelRepository {
     constructor(sequelize) {
         this.Op = sequelize.Op;
@@ -22,7 +23,7 @@ class HotelRepository {
     }
 
     actualizar(id, nuevoHotel) {
-        return this.handleHotelPromise(Hotel.update(nuevoHotel, {where: {id: id}}).then(() => Hotel.findByPk(id)), nuevoHotel);
+        return this.handleHotelPromise(Hotel.update(nuevoHotel, {where: {id: id}}).then(() => Hotel.findByPk(id,{rejectOnEmpty:true})), nuevoHotel);
     }
 
     handleHotelPromise(promise, nuevoHotel) {
@@ -42,27 +43,14 @@ class HotelRepository {
     }
 
     handleSequelizeError(error) {
-        if(error.errors[0].constructor.name === 'ValidationErrorItem' && error.errors[0].path === 'name') {
+        if(error instanceof Sequelize.ValidationError) {
             throw new ValidationError('El nombre del hotel es invalido');
+        }
+        if(error instanceof Sequelize.EmptyResultError) {
+            throw new EntityNotFoundError('El hotel indicado no se encontro');
         }
     }
 
-    abc(n, h){
-        let amenities = null;
-        if (n.amenities) {
-            amenities = Amenity.findAll({where: {id: n.amenities}});
-        }
-        return Promise.all([amenities])
-            .then(sAmenities => this[_crearRelacionConAmenities](h, amenities))
-            .then(() => h);
-    }
-    /*actualizar(id, nuevoHotel) {
-        const options = {include: [{model: Amenity, as: 'amenities'}]};
-        return Hotel.update(nuevoHotel, {where: {id: id}})
-            .then(h => Hotel.findByPk(id))
-            .then(h => this.abc(nuevoHotel, h))
-            .then(() => Hotel.findByPk(id, options));
-    }*/
     [_crearRelacionConAmenities](hotel, amenities) {
         if(!(amenities && amenities.length === 0)) {
             return hotel.addAmenities(amenities);

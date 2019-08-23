@@ -191,8 +191,9 @@ module.exports = {
         };
         let id = 1619011;
         hotelService.actualizar(id, nuevoHotel).catch((err) => {
-            err.codigo.should.be.equal(1);
-            err.descripcion.should.be.equal('El id a borrar no existe');
+            err.code.should.be.equal('400000');
+            err.name.should.be.equal('EntityNotFoundError');
+            err.toString().should.be.equal('Error=EntityNotFoundError code=400000 message:El hotel indicado no se encontro');
             done();
         });
     },
@@ -216,8 +217,9 @@ module.exports = {
         };
         let id = 161901;
         hotelService.actualizar(id, nuevoHotel).catch((err) => {
-            err.codigo.should.be.equal(2);
-            err.descripcion.should.be.equal('Indique el nombre del hotel');
+            err.code.should.be.equal('400001');
+            err.name.should.be.equal('ValidationError');
+            err.toString().should.be.equal('Error=ValidationError code=400001 message:El nombre del hotel es invalido');
             done();
         });
     },
@@ -228,8 +230,9 @@ module.exports = {
         };
         let id = 161901;
         hotelService.actualizar(id, nuevoHotel).catch((err) => {
-            err.codigo.should.be.equal(2);
-            err.descripcion.should.be.equal('Indique el nombre del hotel');
+            err.code.should.be.equal('400001');
+            err.name.should.be.equal('ValidationError');
+            err.toString().should.be.equal('Error=ValidationError code=400001 message:El nombre del hotel es invalido');
             done();
         });
     },

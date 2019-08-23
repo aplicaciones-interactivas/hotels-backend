@@ -12,7 +12,11 @@ class Hotel extends Model {
                 name: {
                     type: DataTypes.STRING,
                     set: function (name) {
-                        this.setDataValue('name', name.trim());
+                        if(name===null){
+                            this.setDataValue('name', null);
+                        }else{
+                            this.setDataValue('name', name.trim());
+                        }
                     },
                     allowNull: false,
                     validate: {
