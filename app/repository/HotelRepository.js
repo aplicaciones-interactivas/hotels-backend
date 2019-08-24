@@ -12,7 +12,7 @@ class HotelRepository {
         this.Op = sequelize.Op;
     }
 
-    buscarTodos(filtros) {
+    findAll(filtros) {
         let options = this[_armarFiltros](filtros || {});
         options.include = [
             {model: Amenity, as: 'amenities'}
@@ -20,12 +20,11 @@ class HotelRepository {
         return Hotel.findAll(options);
     }
 
-    guardar(nuevoHotel) {
+    create(nuevoHotel) {
         return this.handleHotelPromise(Hotel.create(nuevoHotel), nuevoHotel);
-
     }
 
-    actualizar(id, nuevoHotel) {
+    update(id, nuevoHotel) {
         return this.handleHotelPromise(Hotel.update(nuevoHotel, {where: {id: id}}).then(() => Hotel.findByPk(id,{rejectOnEmpty:true})), nuevoHotel);
     }
 
@@ -61,11 +60,11 @@ class HotelRepository {
         throw new EntityNotFoundError('Alguno de los amenities indicados no existe');
     }
 
-    buscarPorId(id) {
+    findOne(id) {
         return Hotel.findByPk(id);
     }
 
-    borrar(id) {
+    delete(id) {
         return Hotel.destroy({
             where: {
                 id: id

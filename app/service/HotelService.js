@@ -19,34 +19,34 @@ class HotelService {
         this.hotelRepository = hotelRepository;
     }
 
-    buscarTodos(filtros) {
-        return this.hotelRepository.buscarTodos(filtros);
+    findAll(filtros) {
+        return this.hotelRepository.findAll(filtros);
     }
 
-    guardar(nuevoHotel) {
+    create(nuevoHotel) {
         logger.info('Guardando hotel '+ JSON.stringify(nuevoHotel));
         nuevoHotel.id = null;
-        return this.hotelRepository.guardar(nuevoHotel)
+        return this.hotelRepository.create(nuevoHotel)
             .catch((err) => {
                 logger.error(err.toString());
                 throw err;
             });
     }
 
-    buscarPorId(id) {
-        return this.hotelRepository.buscarPorId(id);
+    findOne(id) {
+        return this.hotelRepository.findOne(id);
     }
 
-    actualizar(id, nuevoHotel) {
-        return this.hotelRepository.actualizar(id, nuevoHotel)
+    update(id, nuevoHotel) {
+        return this.hotelRepository.update(id, nuevoHotel)
             .catch((err) => {
                 logger.error(err.toString());
                 throw err;
             });
     }
 
-    borrar(id) {
-        return this.hotelRepository.borrar(id)
+    delete(id) {
+        return this.hotelRepository.delete(id)
             .then((cantidadBorrados) => {
                 if (!id) {
                     throw this.errors.errorIdNoIndicado;
