@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const mocha = require('gulp-mocha');
+const nodemon = require('gulp-nodemon');
 
 gulp.task('test', (cb) => {
     process.env.NODE_ENV = 'test';
@@ -10,4 +11,14 @@ gulp.task('test', (cb) => {
             process.exit();
         });
     cb();
+});
+
+gulp.task('dev', (cb) => {
+    process.env.NODE_ENV = 'development';
+    nodemon({
+        script: 'server.js'
+        , ext: 'js html'
+        , env: { 'NODE_ENV': 'development' }
+        , done: cb
+    });
 });

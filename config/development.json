@@ -3,5 +3,13 @@
     "db": {
         "dialect": "sqlite",
         "storage": "./db.development.sqlite"
+    },
+    "logging": {
+        "console": {
+            "level": "debug",
+            "handleExceptions": true,
+            "json": false,
+            "colorize": true
+        }
     }
 }
