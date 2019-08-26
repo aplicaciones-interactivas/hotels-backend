@@ -29,6 +29,7 @@
   "scripts": {
     "server": "node server.js",
     "test": "gulp test",
+    "run-dev": "gulp dev",
     "jshint": "jshint app/"
   }
 }
