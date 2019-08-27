@@ -1,0 +1,19 @@
+{
+    "port": 8080,
+    "logging": {
+        "console": {
+            "level": "debug",
+            "handleExceptions": true,
+            "json": false,
+            "colorize": true
+        }
+    },
+    "db": {
+        "username": "hotels",
+        "database": "hotels",
+        "host": "127.0.0.1",
+        "port": 3306,
+        "dialect": "mysql",
+        "logging": true
+    }
+}
