@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  mysql-test:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'hotels'
+      MYSQL_USER: 'hotels'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+    ports:
+      - '{{host_port}}:3306'
+    expose:
+      # Opens port 3306 on the container
+      - '3306'
