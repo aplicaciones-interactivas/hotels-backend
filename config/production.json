@@ -1,11 +1,11 @@
 {
-    "port": 8080,
-    "db": {
-        "username": "hoteles",
-        "password": "hoteles",
-        "database": "hoteles",
-        "host": "127.0.0.1",
-        "dialect": "mysql",
-        "logging": false
-    }
+  "port": 8080,
+  "db": {
+    "username": "hoteles",
+    "password": "hoteles",
+    "database": "hoteles",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "logging": false
+  }
 }

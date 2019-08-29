@@ -11,7 +11,7 @@ module.exports = {
             Amenity.bulkCreate(dataAmenity);
         });
         await Hotel.truncate().then(() => {
-            Hotel.bulkCreate(dataHotel, {include:  {model: Amenity, as: 'amenities'}});
+            Hotel.bulkCreate(dataHotel, {include: {model: Amenity, as: 'amenities'}});
         });
     }
 }

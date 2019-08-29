@@ -5,7 +5,6 @@ const dbConfig = require('config').db;
 const Hotel = require('./Hotel');
 const Amenity = require('./Amenity');
 
-
 let sequelize;
 
 if (process.env.DATABASE_URL) {
@@ -15,7 +14,7 @@ if (process.env.DATABASE_URL) {
 }
 const models = {
     hotel: Hotel.init(sequelize, Sequelize),
-    amenity : Amenity.init(sequelize, Sequelize)
+    amenity: Amenity.init(sequelize, Sequelize)
 };
 
 Object.values(models)

@@ -18,7 +18,7 @@ gulp.task('dev', (cb) => {
     nodemon({
         script: 'server.js'
         , ext: 'js html'
-        , env: { 'NODE_ENV': 'development' }
+        , env: {'NODE_ENV': 'development'}
         , done: cb
     });
 });

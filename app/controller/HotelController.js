@@ -47,4 +47,4 @@ class HotelController {
     }
 }
 
-module.exports=HotelController;
+module.exports = HotelController;

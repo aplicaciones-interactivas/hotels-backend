@@ -63,7 +63,7 @@ module.exports = {
         var nuevoHotel = {
             name: 'Hotel Stefanos',
             stars: 5,
-            amenities: [1,3]
+            amenities: [1, 3]
         };
 
         hotelService.create(nuevoHotel).then((hotelGuardado) => {
@@ -241,7 +241,7 @@ module.exports = {
         let nuevoHotel = {
             name: 'Hotel Stefanos',
             stars: 5,
-            amenities: [1,3]
+            amenities: [1, 3]
         };
         let hotelAntes = {
             'id': id,

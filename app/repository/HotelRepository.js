@@ -25,7 +25,7 @@ class HotelRepository {
     }
 
     update(id, nuevoHotel) {
-        return this.handleHotelPromise(Hotel.update(nuevoHotel, {where: {id: id}}).then(() => Hotel.findByPk(id,{rejectOnEmpty:true})), nuevoHotel);
+        return this.handleHotelPromise(Hotel.update(nuevoHotel, {where: {id: id}}).then(() => Hotel.findByPk(id, {rejectOnEmpty: true})), nuevoHotel);
     }
 
     handleHotelPromise(promise, nuevoHotel) {
@@ -35,7 +35,7 @@ class HotelRepository {
         const optsHotel = {include: [{model: Amenity, as: 'amenities'}]};
         return promise.catch(this.handleSequelizeError).then(hotel => {
             let amenities = null;
-            if(nuevoHotel.amenities) {
+            if (nuevoHotel.amenities) {
                 optsAmenities.where.id = nuevoHotel.amenities;
                 amenities = Amenity.findAll(optsAmenities)
                     .then(amenities => this[_crearRelacionConAmenities](hotel, amenities));
@@ -45,16 +45,16 @@ class HotelRepository {
     }
 
     handleSequelizeError(error) {
-        if(error instanceof Sequelize.ValidationError) {
+        if (error instanceof Sequelize.ValidationError) {
             throw new ValidationError('El nombre del hotel es invalido');
         }
-        if(error instanceof Sequelize.EmptyResultError) {
+        if (error instanceof Sequelize.EmptyResultError) {
             throw new EntityNotFoundError('El hotel indicado no se encontro');
         }
     }
 
     [_crearRelacionConAmenities](hotel, amenities) {
-        if(!(amenities && amenities.length === 0)) {
+        if (!(amenities && amenities.length === 0)) {
             return hotel.addAmenities(amenities);
         }
         throw new EntityNotFoundError('Alguno de los amenities indicados no existe');

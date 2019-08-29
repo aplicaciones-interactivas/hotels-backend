@@ -7,9 +7,11 @@ module.exports = {
     up: function (queryInterface, Sequelize) {
         queryInterface.dropTable('Hotels');
         queryInterface.createTable('Hotels', {
-            id: {type: Sequelize.INTEGER, primaryKey: true,
+            id: {
+                type: Sequelize.INTEGER, primaryKey: true,
                 autoIncrement: true,
-                allowNull: false},
+                allowNull: false
+            },
             name: Sequelize.STRING,
             stars: Sequelize.INTEGER,
             amenities: Sequelize.STRING
@@ -18,6 +20,6 @@ module.exports = {
     },
     down: function (queryInterface, Sequelize) {
         return queryInterface
-                .dropTable('Hotels');
+            .dropTable('Hotels');
     }
 }

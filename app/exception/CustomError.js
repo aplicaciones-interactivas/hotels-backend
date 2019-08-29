@@ -7,7 +7,7 @@ class CustomError extends Error {
     }
 
     toString() {
-        return 'Error='+ this.name+' code='+ this.code+ ' message:' + this.message;
+        return 'Error=' + this.name + ' code=' + this.code + ' message:' + this.message;
     }
 }
 

@@ -24,7 +24,7 @@ class HotelService {
     }
 
     create(nuevoHotel) {
-        logger.info('Guardando hotel '+ JSON.stringify(nuevoHotel));
+        logger.info('Guardando hotel ' + JSON.stringify(nuevoHotel));
         nuevoHotel.id = null;
         return this.hotelRepository.create(nuevoHotel)
             .catch((err) => {
