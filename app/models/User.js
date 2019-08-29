@@ -31,6 +31,10 @@ class User extends Model {
             sequelize
         });
     }
+    static associate(models) {
+        this.reservations = this.hasMany(models.reservation, {as:'reservations'});
+        this.roles = this.belongsToMany(models.role, {through: 'user_role', as: 'roles'});
+    }
 }
 
 module.exports = User;

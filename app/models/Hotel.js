@@ -74,9 +74,9 @@ class Hotel extends Model {
 
     static associate(models) {
       this.amenities = this.belongsToMany(models.amenity, {through: 'hotel_amenity', as:'amenities'});
-      this.rooms = this.hasMany(models.rooms, {as: 'rooms'});
-      this.mealPlans = this.belongsToMany(models.mealPlans, {through: 'meal_plans'});
-      this.images = this.hasMany(models.hotel_images, {as: 'images'});
+      this.rooms = this.hasMany(models.room, {as: 'rooms'});
+      this.mealPlans = this.belongsToMany(models.mealPlan, {through: 'meal_plans'});
+      this.images = this.hasMany(models.hotelImage, {as: 'images'});
     }
 }
 

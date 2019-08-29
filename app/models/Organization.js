@@ -33,8 +33,8 @@ class Organization extends Model {
     }
 
     static associate(models) {
-        models.hotels = this.hasMany(models.hotels, {as: 'hotels'});
-        models.users = this.hasMany(models.users, {as: 'users'});
+        models.hotels = this.hasMany(models.hotel, {as: 'hotels'});
+        models.users = this.hasMany(models.user, {as: 'users'});
     }
 }
 
