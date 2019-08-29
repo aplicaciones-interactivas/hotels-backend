@@ -38,6 +38,7 @@ class Room extends Model {
             sequelize
         });
     }
+
 }
 
 module.exports = Room;

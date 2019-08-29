@@ -72,9 +72,11 @@ class Hotel extends Model {
             });
     }
 
-    //static associate(models) {
-    //  this.amenities = this.belongsToMany(models.amenity, {through: 'hotel_amenity', as:'amenities'});
-    //}
+    static associate(models) {
+      this.amenities = this.belongsToMany(models.amenity, {through: 'hotel_amenity', as:'amenities'});
+      this.rooms = this.hasMany(models.rooms, {as: 'rooms'});
+      this.mealPlans = this.belongsToMany(models.mealPlans, {through: 'me'});
+    }
 }
 
 module.exports = Hotel;
