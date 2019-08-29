@@ -31,6 +31,11 @@ class Organization extends Model {
             sequelize
         });
     }
+
+    static associate(models) {
+        models.hotels = this.hasMany(models.hotels, {as: 'hotels'});
+        models.users = this.hasMany(models.users, {as: 'users'});
+    }
 }
 
 module.exports = Organization;

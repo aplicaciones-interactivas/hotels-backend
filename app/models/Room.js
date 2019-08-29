@@ -39,6 +39,12 @@ class Room extends Model {
         });
     }
 
+    static associate(models) {
+        this.amenities = this.belongsToMany(models.amenity, {through: 'room_amenity', as:'amenities'});
+        this.beds = this.belongsToMany(models.bed, {through: 'room_bed', as:'beds'});
+    }
+
+
 }
 
 module.exports = Room;
