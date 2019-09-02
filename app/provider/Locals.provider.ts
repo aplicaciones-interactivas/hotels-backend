@@ -21,7 +21,6 @@ export class LocalsProvider {
 
                 const isCORSEnabled = process.env.CORS_ENABLED || true;
                 const jwtExpiresIn = process.env.JWT_EXPIRES_IN || 3;
-                const apiPrefix = process.env.API_PREFIX || 'api';
 
                 const logDays = process.env.LOG_DAYS || 10;
 
@@ -34,8 +33,9 @@ export class LocalsProvider {
                 const redisDB = process.env.REDIS_QUEUE_PREFIX || 3;
          */
 
-        const url = process.env.APP_URL || `http://localhost:${process.env.PORT}`;
+        const apiPrefix = process.env.API_PREFIX || 'api';
         const port = process.env.PORT || 4040;
+        const url = process.env.APP_URL || `http://localhost:`+ port;
         const dbHost = process.env.DB_HOST || 'localhost';
         const dbPort = process.env.DB_PORT || 3306;
         const dbUsername = process.env.DB_USERNAME || 'root';
@@ -52,6 +52,7 @@ export class LocalsProvider {
         return {
             url,
             port,
+            apiPrefix,
             logLevel,
             db: {
                 dbHost,

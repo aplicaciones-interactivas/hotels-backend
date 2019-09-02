@@ -3,21 +3,19 @@ import {LocalsProvider} from "./Locals.provider";
 import {LoggerProvider} from './Logger.provider'
 import {Logger} from "typescript-logging";
 import BootstrapMiddleware from '../middlewares/Bootstrap.middleware';
+import morgan from 'morgan';
 
 class ExpressProvider {
 
-    logger: Logger = LoggerProvider.getLogger(ExpressProvider.name);
+    private logger: Logger = LoggerProvider.getLogger(ExpressProvider.name);
     public express: express.Application;
 
     constructor() {
+        this.logger.debug("Starting express");
         this.express = express();
         this.mountDotEnv();
         this.mountMiddlewares();
-
-
-        /*
-                this.mountMiddlewares();
-                this.mountRoutes();*/
+        this.express.use(morgan('dev'));
     }
 
     private mountMiddlewares (): void {
@@ -29,9 +27,9 @@ class ExpressProvider {
     }
 
     public init(): any {
-        this.logger.debug("Starting express");
         const port = LocalsProvider.config().port;
         this.express.listen(port, () => this.logger.info("Listening at port: " + port));
+
     }
 
 }

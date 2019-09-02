@@ -2,6 +2,9 @@ import {Sequelize} from 'sequelize-typescript';
 import {LocalsProvider} from "./Locals.provider";
 import {Dialect} from "sequelize";
 
+import {LoggerProvider} from './Logger.provider'
+import {Logger} from "typescript-logging";
+
 class SequelizeProvider {
 
     public startDatabase(): Sequelize {
