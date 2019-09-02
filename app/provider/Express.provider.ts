@@ -2,7 +2,7 @@ import express from 'express';
 import {LocalsProvider} from "./Locals.provider";
 import {LoggerProvider} from './Logger.provider'
 import {Logger} from "typescript-logging";
-import KernelMiddleware from '../middlewares/Kernel.middleware';
+import BootstrapMiddleware from '../middlewares/Bootstrap.middleware';
 
 class ExpressProvider {
 
@@ -14,13 +14,14 @@ class ExpressProvider {
         this.mountDotEnv();
         this.mountMiddlewares();
 
+
         /*
                 this.mountMiddlewares();
                 this.mountRoutes();*/
     }
 
     private mountMiddlewares (): void {
-        this.express = KernelMiddleware.init(this.express);
+        this.express = BootstrapMiddleware.init(this.express);
     }
 
     private mountDotEnv(): void {
