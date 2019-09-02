@@ -1,5 +1,4 @@
 import {Application} from "express";
-import {Dialect} from "sequelize/types/lib/sequelize";
 
 export class LocalsProvider {
 
@@ -41,20 +40,32 @@ export class LocalsProvider {
         const dbPort = process.env.DB_PORT || 3306;
         const dbUsername = process.env.DB_USERNAME || 'root';
         const dbPassword = process.env.DB_PASSWORD || '';
-        const dbDialect : string = process.env.DB_DIALECT || 'mysql';
-        const database : string = process.env.DB_DATABASE || 'hotels';
-        const storage : string | undefined = process.env.DB_STORAGE || undefined;
+        const dbDialect: string = process.env.DB_DIALECT || 'mysql';
+        const database: string = process.env.DB_DATABASE || 'hotels';
+        const storage: string | undefined = process.env.DB_STORAGE || undefined;
+        const redisHost = process.env.REDIS_HOST || 'localhost';
+        const redisPort = process.env.REDIS_PORT || 6379;
+        const redisUsername = process.env.REDIS_USERNAME || 'redis';
+        const redisPassword = process.env.REDIS_HOST || '';
 
         return {
             url,
             port,
-            dbHost,
-            dbPort,
-            dbUsername,
-            dbPassword,
-            dbDialect,
-            database,
-            storage
+            db: {
+                dbHost,
+                dbPort,
+                dbUsername,
+                dbPassword,
+                dbDialect,
+                database,
+                storage
+            },
+            redis: {
+                redisHost,
+                redisPassword,
+                redisPort,
+                redisUsername
+            }
         }
     }
 

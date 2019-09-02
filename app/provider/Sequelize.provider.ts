@@ -8,12 +8,12 @@ class SequelizeProvider {
         const locals = LocalsProvider.config();
 
         let options = {
-            database: locals.database,
-            dialect: locals.dbDialect,
-            username: locals.dbUsername,
-            password: locals.dbPassword,
+            database: locals.db.database,
+            dialect: locals.db.dbDialect,
+            username: locals.db.dbUsername,
+            password: locals.db.dbPassword,
             models: [__dirname + '../models'],
-            storage: locals.storage
+            storage: locals.db.storage
         };
 
         //@ts-ignore
