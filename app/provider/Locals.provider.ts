@@ -47,10 +47,12 @@ export class LocalsProvider {
         const cachePort = process.env.REDIS_PORT || undefined;
         const cacheUsername = process.env.REDIS_USERNAME || undefined;
         const cachePassword = process.env.REDIS_PASSWORD || undefined;
+        const logLevel = process.env.LOG_LEVEL || 'Debug';
 
         return {
             url,
             port,
+            logLevel,
             db: {
                 dbHost,
                 dbPort,
