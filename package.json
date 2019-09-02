@@ -6,6 +6,8 @@
   "author": "Eduardo",
   "dependencies": {
     "@types/bluebird": "^3.5.27",
+    "@types/cors": "^2.8.4",
+    "@types/dotenv": "^4.0.3",
     "@types/express": "^4.17.1",
     "@types/node": "^12.7.2",
     "@types/validator": "^10.11.3",
@@ -26,6 +28,7 @@
     "streamjs": "^1.6.4",
     "tslint": "^5.19.0",
     "typescript": "^3.6.2",
+    "typescript-logging": "^0.6.3",
     "winston": "^3.2.1"
   },
   "devDependencies": {
@@ -34,12 +37,13 @@
     "eslint": "^6.2.2",
     "gulp-mocha": "^7.0.1",
     "gulp-nodemon": "^2.4.2",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "ts-node": "^8.3.0"
   },
   "scripts": {
     "server": "node server.js",
     "test": "gulp test",
-    "run-dev": "gulp dev",
+    "run-dev": "ts-node app/index.ts",
     "tsc": "tsc"
   }
 }
