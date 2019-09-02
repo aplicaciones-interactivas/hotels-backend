@@ -1,4 +1,5 @@
 import {Application} from "express";
+import {Dialect} from "sequelize/types/lib/sequelize";
 
 export class LocalsProvider {
 
@@ -33,16 +34,31 @@ export class LocalsProvider {
                 const redisPrefix = process.env.REDIS_QUEUE_DB || 'q';
                 const redisDB = process.env.REDIS_QUEUE_PREFIX || 3;
          */
+
         const url = process.env.APP_URL || `http://localhost:${process.env.PORT}`;
         const port = process.env.PORT || 4040;
+        const dbHost = process.env.DB_HOST || 'localhost';
+        const dbPort = process.env.DB_PORT || 3306;
+        const dbUsername = process.env.DB_USERNAME || 'root';
+        const dbPassword = process.env.DB_PASSWORD || '';
+        const dbDialect : string = process.env.DB_DIALECT || 'mysql';
+        const database : string = process.env.DB_DATABASE || 'hotels';
+        const storage : string | undefined = process.env.DB_STORAGE || undefined;
 
         return {
             url,
-            port
+            port,
+            dbHost,
+            dbPort,
+            dbUsername,
+            dbPassword,
+            dbDialect,
+            database,
+            storage
         }
     }
 
-    public static init (_express: Application): Application {
+    public static init(_express: Application): Application {
         _express.locals.app = this.config();
         return _express;
     }
