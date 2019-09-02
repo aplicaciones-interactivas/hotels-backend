@@ -43,10 +43,10 @@ export class LocalsProvider {
         const dbDialect: string = process.env.DB_DIALECT || 'mysql';
         const database: string = process.env.DB_DATABASE || 'hotels';
         const storage: string | undefined = process.env.DB_STORAGE || undefined;
-        const redisHost = process.env.REDIS_HOST || 'localhost';
-        const redisPort = process.env.REDIS_PORT || 6379;
-        const redisUsername = process.env.REDIS_USERNAME || 'redis';
-        const redisPassword = process.env.REDIS_HOST || '';
+        const cacheHost = process.env.REDIS_HOST || undefined;
+        const cachePort = process.env.REDIS_PORT || undefined;
+        const cacheUsername = process.env.REDIS_USERNAME || undefined;
+        const cachePassword = process.env.REDIS_PASSWORD || undefined;
 
         return {
             url,
@@ -61,10 +61,10 @@ export class LocalsProvider {
                 storage
             },
             redis: {
-                redisHost,
-                redisPassword,
-                redisPort,
-                redisUsername
+                redisHost: cacheHost,
+                redisPassword: cachePassword,
+                redisPort: cachePort,
+                redisUsername: cacheUsername
             }
         }
     }

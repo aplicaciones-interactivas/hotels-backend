@@ -1,4 +1,4 @@
-import {ExpirationStrategy, RedisStorage} from "node-ts-cache";
+import {ExpirationStrategy, RedisStorage, MemoryStorage} from "node-ts-cache";
 import {LocalsProvider} from "./Locals.provider";
 
 class CacheProvider {
@@ -7,9 +7,14 @@ class CacheProvider {
 
     public startCache() {
         const locals = LocalsProvider.config();
-        this.strategy = new ExpirationStrategy(new RedisStorage({
-            url: "redis://" + locals.redis.redisUsername + ":" + locals.redis.redisPassword + "@" + locals.redis.redisHost + ":" + locals.redis.redisPort
-        }));
+        if(locals.redis.redisPort || locals.redis.redisHost || locals.redis.redisUsername || locals.redis.redisPassword) {
+            this.strategy = new ExpirationStrategy(new RedisStorage({
+                url: "redis://" + locals.redis.redisUsername + ":" + locals.redis.redisPassword + "@" + locals.redis.redisHost + ":" + locals.redis.redisPort
+            }));
+        } else {
+            this.strategy = new ExpirationStrategy(new MemoryStorage());
+        }
+
     }
 
     public getStategy() {
