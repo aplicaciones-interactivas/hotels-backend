@@ -22,20 +22,20 @@ export class Organization extends Model<Organization> {
     @Column(DataType.BIGINT)
     id!: number;
 
-    @Column(DataType.TEXT)
     @AllowNull(false)
+    @Column(DataType.TEXT)
     billingAddress!: string;
 
-    @Column(DataType.STRING(50))
     @AllowNull(false)
+    @Column(DataType.STRING(50))
     country!: string;
 
-    @Column(DataType.STRING(255))
     @AllowNull(false)
+    @Column(DataType.STRING(255))
     billingIdentifier!: string;
 
-    @Column(DataType.STRING(255))
     @AllowNull(false)
+    @Column(DataType.STRING(255))
     name!: string;
 
     @HasMany(() => Hotel)

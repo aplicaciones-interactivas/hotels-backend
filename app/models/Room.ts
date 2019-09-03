@@ -12,8 +12,8 @@ export class Room extends Model<Room> {
     @Column(DataType.BIGINT)
     id!: number;
 
-    @Column(DataType.ENUM('SINGLE','DOUBLE','TRIPLE','QUAD','QUEEN','KING','DOUBLE_DOUBLE','STUDIO','SUITE','MASTER_SUITE','JUNIOR_SUITE'))
     @AllowNull(false)
+    @Column(DataType.ENUM('SINGLE','DOUBLE','TRIPLE','QUAD','QUEEN','KING','DOUBLE_DOUBLE','STUDIO','SUITE','MASTER_SUITE','JUNIOR_SUITE'))
     type!: string;
 
     @Column(DataType.INTEGER)

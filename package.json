@@ -14,13 +14,11 @@
     "@types/node": "^12.7.2",
     "@types/validator": "^10.11.3",
     "body-parser": "^1.19.0",
-    "camelcase": "^5.3.1",
     "config": "^3.2.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-query-int": "^3.0.0",
     "express-status-monitor": "^1.2.6",
-    "gulp": "^4.0.2",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.5",
     "node-ts-cache": "^2.0.0",
@@ -37,18 +35,18 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@types/chai": "^4.2.0",
+    "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
     "eslint": "^6.2.2",
-    "gulp-mocha": "^7.0.1",
     "gulp-nodemon": "^2.4.2",
     "mocha": "^6.2.0",
+    "mocha-typescript": "^1.1.17",
     "ts-node": "^8.3.0"
   },
   "scripts": {
     "server": "node server.js",
-    "test": "gulp test",
     "run-dev": "ts-node app/index.ts",
-    "tsc": "tsc"
+    "test": "mocha -r ts-node/register test/**/*.spec.ts"
   }
 }

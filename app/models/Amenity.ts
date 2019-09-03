@@ -7,7 +7,7 @@ export class Amenity extends Model {
     id!: number;
     @Column(DataType.STRING(10))
     code!: string;
-    @Column(DataType.TEXT)
     @AllowNull(false)
+    @Column(DataType.TEXT)
     description!: string;
 }

@@ -26,11 +26,11 @@ export class Hotel extends Model<Hotel> {
     @AutoIncrement
     @Column(DataType.BIGINT)
     id!:number;
-    @Column(DataType.STRING(255))
     @AllowNull(false)
-    name!: string;
     @Column(DataType.STRING(255))
+    name!: string;
     @IsEmail
+    @Column(DataType.STRING(255))
     contactEmail?: string;
     @Column(DataType.STRING(30))
     primaryContactPhone? : string;
@@ -45,14 +45,14 @@ export class Hotel extends Model<Hotel> {
     @Column(DataType.ENUM('HOTEL','APART','HOSTEL','OTHER'))
     category? : string;
     //esto se puede reemplazar luego por geolocalizacion
-    @Column(DataType.STRING(50))
     @AllowNull(false)
+    @Column(DataType.STRING(50))
     country!: string;
+    @AllowNull(false)
     @Column(DataType.STRING(50))
-    @AllowNull(false)
     city!: string;
-    @Column(DataType.TEXT)
     @AllowNull(false)
+    @Column(DataType.TEXT)
     address!: string;
     @BelongsToMany(() => Amenity, () => HotelAmenity)
     amenities?: Amenity[];

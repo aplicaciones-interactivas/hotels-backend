@@ -8,11 +8,11 @@ export class Reservation extends Model<Reservation> {
     @BelongsTo(() => Room)
     @AllowNull(false)
     room!: Room;
-    @Column(DataType.DATE)
     @AllowNull(false)
+    @Column(DataType.DATE)
     from!: Date;
-    @Column(DataType.DATE)
     @AllowNull(false)
+    @Column(DataType.DATE)
     until!: Date;
     @BelongsTo(()=> MealPlan)
     mealPlan?: MealPlan;

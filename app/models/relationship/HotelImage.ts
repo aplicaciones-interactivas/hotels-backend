@@ -3,10 +3,10 @@ import {Hotel} from "../Hotel";
 
 export class HotelImage extends Model<HotelImage> {
     @ForeignKey(() => Hotel)
+    @NotNull
     @Column(DataType.BIGINT)
-    @NotNull
     hotelId!: number;
-    @Column(DataType.STRING)
     @NotNull
+    @Column(DataType.STRING)
     path!: string;
 }

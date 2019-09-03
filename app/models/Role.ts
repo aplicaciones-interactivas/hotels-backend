@@ -5,7 +5,7 @@ export class Role extends Model<Role> {
     @AutoIncrement
     @Column(DataType.BIGINT)
     id!: number;
-    @Column(DataType.STRING(50))
     @AllowNull(false)
+    @Column(DataType.STRING(50))
     role_name!: string;
 }

@@ -5,14 +5,14 @@ export class MealPlan extends Model<MealPlan> {
     @AutoIncrement
     @Column(DataType.BIGINT)
     id!: number;
+    @AllowNull(false)
     @Column(DataType.STRING(255))
-    @AllowNull(false)
     name!: string;
+    @AllowNull(false)
     @Column(DataType.TEXT)
-    @AllowNull(false)
     description!: string;
-    @Column(DataType.STRING(2))
     @AllowNull(false)
+    @Column(DataType.STRING(2))
     code!: string;
 
 }

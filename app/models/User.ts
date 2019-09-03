@@ -20,23 +20,23 @@ export class User extends Model<User> {
     @Column(DataType.BIGINT)
     id!: number;
 
-    @Column(DataType.STRING(20))
     @Unique
     @AllowNull(false)
     @Is(new UsernameValidator().validate)
+    @Column(DataType.STRING(20))
     username!: string;
 
-    @Column(DataType.STRING(255))
     @AllowNull(false)
+    @Column(DataType.STRING(255))
     password!: string;
 
-    @Column(DataType.STRING(255))
     @AllowNull(false)
     @IsEmail
+    @Column(DataType.STRING(255))
     email!: string;
 
-    @Column(DataType.BIGINT)
     @AllowNull(false)
+    @Column(DataType.BIGINT)
     organizationId!: number;
 
     @BelongsToMany(() => Role, () => UserRole)

@@ -6,11 +6,11 @@ export class Bed extends Model<Bed> {
     @AutoIncrement
     @Column(DataType.BIGINT)
     id!: number;
+    @AllowNull(false)
     @Column(DataType.STRING(100))
-    @AllowNull(false)
     name!: string;
-    @Column(DataType.STRING(10))
     @AllowNull(false)
+    @Column(DataType.STRING(10))
     code!: string;
 
 }

@@ -1,8 +1,9 @@
 import {CrudRepository} from "./CrudRepository";
 import {Model} from "sequelize-typescript";
 
-abstract class SimpleBaseRepository<T extends Model, ID> implements CrudRepository<T,ID>{
+export abstract class SimpleBaseRepository<T extends Model, ID> implements CrudRepository<T,ID>{
     count(): Promise<number> {
+
         throw new Error('Method not implemented.');
     }
 
