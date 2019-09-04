@@ -42,11 +42,12 @@
     "gulp-nodemon": "^2.4.2",
     "mocha": "^6.2.0",
     "mocha-typescript": "^1.1.17",
+    "testcontainers": "^2.0.0",
     "ts-node": "^8.3.0"
   },
   "scripts": {
     "server": "node server.js",
     "run-dev": "ts-node app/index.ts",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts"
+    "test": "mocha --timeout 120000 -r ts-node/register test/**/*.spec.ts"
   }
 }
