@@ -3,20 +3,22 @@ import {describe, it, before} from 'mocha';
 import {SimpleBaseRepository} from "../../app/repository/generics/SimpleBaseRepository";
 import {Bed} from "../../app/models/Bed";
 
-describe('Hello function', () => {
+describe('findAll', () => {
 
-    const repository: SimpleBaseRepository<Bed, number> = new class extends SimpleBaseRepository<Bed, number> {
-    };
+    const repository: SimpleBaseRepository<Bed, number> = new (class extends SimpleBaseRepository<Bed, number> {
+    })(Bed);
 
-    before(async () => await new Bed({
-        name: 'King Size',
-        code: "KS"
-    }));
-
-    it('should return list of entity', () => {
-        repository.findAll().then((result) => {
-            expect(result).has.length(1);
-        })
+    before(async () => {
+        await Bed.create({
+            name: 'King Size',
+            code: "KS"
+        });
     });
+
+    it('should return list of persisted entities', async () => {
+        let result = await repository.findAll();
+        expect(result).has.length(1);
+    });
+
 
 });

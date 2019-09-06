@@ -11,7 +11,7 @@ class CorsMiddleware {
     public mount(_express: Application): Application {
         this.logger.debug("Mounting Cors into Express");
         const options = {
-            origin: LocalsProvider.config().url
+            origin: LocalsProvider.getConfig().url
         };
         _express.use(cors(options));
         return _express;

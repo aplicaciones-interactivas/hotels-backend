@@ -15,7 +15,8 @@ class DockerConfiguration {
         this._mysql = await new GenericContainer("mysql")
             .withExposedPorts(3306)
             .withEnv("MYSQL_ALLOW_EMPTY_PASSWORD", "yes")
-            .withEnv("MYSQL_USERNAME", 'hotels')
+            .withEnv("MYSQL_USER", 'hotels')
+            .withEnv("MYSQL_DATABASE", 'hotels')
             .withWaitStrategy(Wait.forLogMessage("mysqld: ready for connections."))
             .start()
     }

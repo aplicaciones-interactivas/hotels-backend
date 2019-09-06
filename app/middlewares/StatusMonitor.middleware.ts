@@ -11,9 +11,9 @@ class StatusMonitorMiddleware {
     public mount (_express: Application): Application {
         this.logger.debug('Booting StatusMonitorMiddleware.');
 
-        const api: string = LocalsProvider.config().apiPrefix;
+        const api: string = LocalsProvider.getConfig().apiPrefix;
 
-        // Define your status monitor config
+        // Define your status monitor getConfig
         const monitorOptions: object = {
             title: 'Hotels Api',
             path: '/status-monitor',

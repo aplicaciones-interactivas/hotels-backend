@@ -8,7 +8,7 @@ import {Logger} from "typescript-logging";
 class SequelizeProvider {
 
     public startDatabase(): Sequelize {
-        const locals = LocalsProvider.config();
+        const locals = LocalsProvider.getConfig();
 
         let options = {
             database: locals.db.database,
@@ -17,12 +17,13 @@ class SequelizeProvider {
             password: locals.db.dbPassword,
             port: locals.db.dbPort,
             host: locals.db.dbHost,
-            models: [__dirname.replace("provider", "models/relationship"),__dirname.replace("provider", "models")],
+            models: [__dirname.replace("provider", "models/relationship"), __dirname.replace("provider", "models")],
             storage: locals.db.storage
         };
 
         //@ts-ignore
-        return new Sequelize(options);
+        let sequelize = new Sequelize(options);
+        return sequelize;
     }
 
 }

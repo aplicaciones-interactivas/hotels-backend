@@ -7,14 +7,16 @@ export class LocalsProvider {
         dotEnvFlow.config({
             path: './app'
         });
+    }
 
+    public static getConfig() {
         const apiPrefix = process.env.API_PREFIX || 'api';
         const port = process.env.PORT || 4040;
         const url = process.env.APP_URL || `http://localhost:` + port;
         const dbHost = process.env.DB_HOST || 'localhost';
         const dbPort = process.env.DB_PORT || 3306;
         const dbUsername = process.env.DB_USERNAME || 'root';
-        const dbPassword = process.env.DB_PASSWORD || '';
+        const dbPassword = process.env.DB_PASSWORD || undefined;
         const dbDialect: string = process.env.DB_DIALECT || 'mysql';
         const database: string = process.env.DB_DATABASE || 'hotels';
         const storage: string | undefined = process.env.DB_STORAGE || undefined;
@@ -48,7 +50,7 @@ export class LocalsProvider {
     }
 
     public static init(_express: Application): Application {
-        _express.locals.app = this.config();
+        _express.locals.app = this.getConfig();
         return _express;
     }
 

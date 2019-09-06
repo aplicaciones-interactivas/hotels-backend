@@ -6,7 +6,7 @@ class CacheProvider {
     strategy?: ExpirationStrategy;
 
     public startCache() {
-        const locals = LocalsProvider.config();
+        const locals = LocalsProvider.getConfig();
         if(locals.redis.redisPort || locals.redis.redisHost || locals.redis.redisUsername || locals.redis.redisPassword) {
             this.strategy = new ExpirationStrategy(new RedisStorage({
                 url: "redis://" + locals.redis.redisUsername + ":" + locals.redis.redisPassword + "@" + locals.redis.redisHost + ":" + locals.redis.redisPort

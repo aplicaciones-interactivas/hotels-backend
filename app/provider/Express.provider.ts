@@ -24,7 +24,7 @@ class ExpressProvider {
         this.mountDotEnv();
         this.mountMiddlewares();
         this.express.use(morgan('dev'));
-        const port = LocalsProvider.config().port;
+        const port = LocalsProvider.getConfig().port;
         this.express.listen(port, () => this.logger.info("Listening at port: " + port));
     }
 

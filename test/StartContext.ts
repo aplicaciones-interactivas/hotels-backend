@@ -3,12 +3,17 @@ import Mocha from 'mocha';
 import * as fs from "fs";
 import * as path from 'path';
 
-dockerConfiguration.start().then(() => {
+function delay(ms: number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+dockerConfiguration.start().then(async () => {
     process.env.NODE_ENV = 'test';
 
     let mocha = new Mocha({
         ui: 'tdd',
-        reporter: 'list'
+        reporter: 'list',
+        timeout: 120000
     });
 
     let testFiles = recFindByExt("test", "spec.ts", null, null);
@@ -23,13 +28,32 @@ dockerConfiguration.start().then(() => {
     fs.writeFileSync('./app/.env.test', content);
 
     require("../app/provider/Application.provider").default.loadServer();
-    require('../app/provider/Sequelize.provider').default.startDatabase();
+    let sequelize = require('../app/provider/Sequelize.provider').default.startDatabase();
     require('../app/provider/Cache.provider').default.startCache();
 
-    mocha.run((f) => {
-        dockerConfiguration.stop();
-        process.exitCode = f ? 1 : 0;
+
+    //wait for mysql ready for accept connections
+    for(;;) {
+        try {
+            await sequelize.authenticate();
+            break;
+        } catch(ex) {
+            await new Promise(function (resolve) {
+                setTimeout(resolve, 1000);
+            })
+        }
+    }
+
+
+    await sequelize.sync();
+
+    mocha.run(async (f) => {
+        sequelize.close().then(() => {
+            dockerConfiguration.stop();
+            process.exitCode = f ? 1 : 0;
+        });
     });
+
 });
 
 

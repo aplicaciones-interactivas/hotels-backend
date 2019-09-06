@@ -1,9 +1,17 @@
-import {CrudRepository} from "./CrudRepository";
-import {Model} from "sequelize-typescript";
+import {CrudRepository, ModelStatic} from "./CrudRepository";
+import {Model, Sequelize} from "sequelize-typescript";
+import {BuildOptions} from "sequelize";
 
-export abstract class SimpleBaseRepository<T extends Model, ID> implements CrudRepository<T,ID>{
+
+export abstract class SimpleBaseRepository<T extends Model, ID> implements CrudRepository<T, ID> {
+
+    model: ModelStatic;
+
+    constructor(model: ModelStatic) {
+        this.model = model;
+    }
+
     count(): Promise<number> {
-
         throw new Error('Method not implemented.');
     }
 
@@ -23,8 +31,8 @@ export abstract class SimpleBaseRepository<T extends Model, ID> implements CrudR
         throw new Error('Method not implemented.');
     }
 
-    findAll(options?: any): Promise<T[]> {
-        throw new Error('Method not implemented.');
+    findAll(options?: any): Promise<Model<T>[]> {
+        return this.model.findAll(options);
     }
 
     findById(id: ID, options?: any): Promise<T> {
