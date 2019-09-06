@@ -1,12 +1,18 @@
-import {AllowNull, BelongsTo, Column, DataType, Model} from "sequelize-typescript";
+import {AllowNull, BelongsTo, Column, DataType, ForeignKey, Model, Scopes, Table} from "sequelize-typescript";
 import {Room} from "./Room";
 import {MealPlan} from "./MealPlan";
 import {User} from "./User";
+import {MealPlanInclusion, RoomInclusion, UserInclusion} from "./scopes/Inclusions";
 
+@Scopes(() => ({
+    withAll: {
+        include: [RoomInclusion, MealPlanInclusion, UserInclusion]
+    }
+}))
+@Table
 export class Reservation extends Model<Reservation> {
 
     @BelongsTo(() => Room)
-    @AllowNull(false)
     room!: Room;
     @AllowNull(false)
     @Column(DataType.DATE)
@@ -18,5 +24,18 @@ export class Reservation extends Model<Reservation> {
     mealPlan?: MealPlan;
     @BelongsTo(()=> User)
     user!: User;
+
+    @ForeignKey(() => Room)
+    @Column(DataType.BIGINT)
+    roomId!: number;
+
+    @ForeignKey(() => MealPlan)
+    @Column(DataType.BIGINT)
+    mealPlanId!: number;
+
+    @ForeignKey(() => User)
+    @Column(DataType.BIGINT)
+    userId!: number;
+
 
 }

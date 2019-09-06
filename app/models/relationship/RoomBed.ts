@@ -1,7 +1,8 @@
-import {Column, DataType, ForeignKey, Model} from "sequelize-typescript";
+import {Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
 import {Room} from "../Room";
 import {Bed} from "../Bed";
 
+@Table
 export class RoomBed extends Model<RoomBed>{
 
     @ForeignKey(() => Room)

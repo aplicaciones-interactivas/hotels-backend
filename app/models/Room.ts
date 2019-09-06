@@ -1,10 +1,24 @@
-import {AllowNull, Model} from "sequelize-typescript";
+import {AllowNull, HasMany, Model, Scopes, Table} from "sequelize-typescript";
 import {AutoIncrement, BelongsToMany, Column, DataType, PrimaryKey} from "sequelize-typescript";
 import {Amenity} from "./Amenity";
 import {RoomAmenity} from "./relationship/RoomAmenity";
 import {Bed} from "./Bed";
 import {RoomBed} from "./relationship/RoomBed";
+import {AmenityInclusion, BedInclusion} from "./scopes/Inclusions";
 
+
+@Scopes(() => ({
+    withAmenities: {
+        include: [AmenityInclusion]
+    },
+    withBeds: {
+        include: [BedInclusion]
+    },
+    withAll: {
+        include: [AmenityInclusion, BedInclusion]
+    }
+}))
+@Table
 export class Room extends Model<Room> {
 
     @PrimaryKey
@@ -13,14 +27,14 @@ export class Room extends Model<Room> {
     id!: number;
 
     @AllowNull(false)
-    @Column(DataType.ENUM('SINGLE','DOUBLE','TRIPLE','QUAD','QUEEN','KING','DOUBLE_DOUBLE','STUDIO','SUITE','MASTER_SUITE','JUNIOR_SUITE'))
+    @Column(DataType.ENUM('SINGLE', 'DOUBLE', 'TRIPLE', 'QUAD', 'QUEEN', 'KING', 'DOUBLE_DOUBLE', 'STUDIO', 'SUITE', 'MASTER_SUITE', 'JUNIOR_SUITE'))
     type!: string;
 
     @Column(DataType.INTEGER)
-    maxOcupancy?:number;
+    maxOcupancy?: number;
 
     @Column(DataType.DOUBLE)
-    surfaceArea?:number;
+    surfaceArea?: number;
 
     @Column(DataType.INTEGER)
     guests?: number;

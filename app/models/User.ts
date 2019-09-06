@@ -5,13 +5,19 @@ import {
     PrimaryKey,
     AutoIncrement,
     Unique,
-    Is, DataType, IsEmail, AllowNull, BelongsToMany
+    Is, DataType, IsEmail, AllowNull, BelongsToMany, ForeignKey, Scopes
 } from 'sequelize-typescript';
 import {Role} from "./Role";
 import {UserRole} from "./relationship/UserRole";
 import {UsernameValidator} from "./validations/impl/UsernameValidator";
+import {Organization} from "./Organization";
+import {RoleInclusion} from "./scopes/Inclusions";
 
-
+@Scopes(() => ({
+    withRoles: {
+        include: [RoleInclusion]
+    }
+}))
 @Table
 export class User extends Model<User> {
 
@@ -35,12 +41,12 @@ export class User extends Model<User> {
     @Column(DataType.STRING(255))
     email!: string;
 
-    @AllowNull(false)
+    @ForeignKey(() => Organization)
     @Column(DataType.BIGINT)
     organizationId!: number;
 
     @BelongsToMany(() => Role, () => UserRole)
-    roles!:Role[];
+    roles!: Role[];
 
 }
 

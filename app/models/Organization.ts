@@ -1,20 +1,28 @@
-import {AllowNull, AutoIncrement, Column, DataType, HasMany, Model, PrimaryKey, Scopes} from "sequelize-typescript";
-import { Hotel } from "./Hotel";
-import { User  } from "./User";
+import {
+    AllowNull,
+    AutoIncrement,
+    Column,
+    DataType,
+    HasMany,
+    Model,
+    PrimaryKey,
+    Scopes,
+    Table
+} from "sequelize-typescript";
+import {Hotel} from "./Hotel";
+import {User} from "./User";
+import {HotelInclusion, UserInclusion} from "./scopes/Inclusions";
 
 
 @Scopes(() => ({
-    hotels: {
-        include: [{
-            model: Hotel
-        }]
+    withHotels: {
+        include: [HotelInclusion]
     },
-    users: {
-        include: [{
-            model: User
-        }]
+    withUsers: {
+        include: [UserInclusion]
     }
 }))
+@Table
 export class Organization extends Model<Organization> {
 
     @PrimaryKey

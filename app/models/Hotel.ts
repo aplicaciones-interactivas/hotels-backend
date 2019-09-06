@@ -3,11 +3,11 @@ import {
     AutoIncrement,
     BelongsToMany,
     Column,
-    DataType,
+    DataType, ForeignKey,
     HasMany,
     IsEmail,
     Model,
-    PrimaryKey, Scopes
+    PrimaryKey, Scopes, Table
 } from "sequelize-typescript";
 import {Amenity} from './Amenity';
 import {HotelAmenity} from "./relationship/HotelAmenity";
@@ -16,16 +16,33 @@ import {MealPlan} from "./MealPlan";
 import {MealPlanHotel} from "./relationship/MealPlanHotel";
 import {RoomHotel} from "./relationship/RoomHotel";
 import {HotelImage} from "./relationship/HotelImage";
+import {Organization} from "./Organization";
+import {AmenityInclusion, HotelImageInclusion, RoomInclusion} from "./scopes/Inclusions";
 
 @Scopes(() => ({
-
+    withAmenities: {
+        include: [AmenityInclusion]
+    },
+    withRooms: {
+        include: [RoomInclusion]
+    },
+    withMealPlans: {
+        include: [MealPlan]
+    },
+    withImage: {
+        include: [HotelImageInclusion]
+    },
+    withAll: {
+        include: [AmenityInclusion, RoomInclusion, MealPlan, HotelImageInclusion]
+    }
 }))
+@Table
 export class Hotel extends Model<Hotel> {
 
     @PrimaryKey
     @AutoIncrement
     @Column(DataType.BIGINT)
-    id!:number;
+    id!: number;
     @AllowNull(false)
     @Column(DataType.STRING(255))
     name!: string;
@@ -33,7 +50,7 @@ export class Hotel extends Model<Hotel> {
     @Column(DataType.STRING(255))
     contactEmail?: string;
     @Column(DataType.STRING(30))
-    primaryContactPhone? : string;
+    primaryContactPhone?: string;
     @Column(DataType.STRING(30))
     secondaryContactPhone?: string;
     @Column(DataType.TIME)
@@ -42,8 +59,8 @@ export class Hotel extends Model<Hotel> {
     checkoutTime?: Date;
     @Column(DataType.INTEGER)
     stars?: number;
-    @Column(DataType.ENUM('HOTEL','APART','HOSTEL','OTHER'))
-    category? : string;
+    @Column(DataType.ENUM('HOTEL', 'APART', 'HOSTEL', 'OTHER'))
+    category?: string;
     //esto se puede reemplazar luego por geolocalizacion
     @AllowNull(false)
     @Column(DataType.STRING(50))
@@ -62,4 +79,8 @@ export class Hotel extends Model<Hotel> {
     mealPlans?: MealPlan[];
     @HasMany(() => HotelImage)
     images?: HotelImage[];
+    @AllowNull(false)
+    @ForeignKey(()=> Organization)
+    @Column(DataType.BIGINT)
+    organizationId?: number;
 }

@@ -1,5 +1,6 @@
-import {AllowNull, AutoIncrement, Column, DataType, Model, PrimaryKey} from "sequelize-typescript";
+import {AllowNull, AutoIncrement, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
 
+@Table
 export class Bed extends Model<Bed> {
 
     @PrimaryKey

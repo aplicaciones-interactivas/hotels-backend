@@ -1,12 +1,12 @@
-import {Column, DataType, ForeignKey, Model, NotNull} from "sequelize-typescript";
+import {AllowNull, Column, DataType, ForeignKey, Model, NotNull, Table} from "sequelize-typescript";
 import {Hotel} from "../Hotel";
 
+@Table
 export class HotelImage extends Model<HotelImage> {
     @ForeignKey(() => Hotel)
-    @NotNull
     @Column(DataType.BIGINT)
     hotelId!: number;
-    @NotNull
+    @AllowNull(false)
     @Column(DataType.STRING)
     path!: string;
 }

@@ -15,7 +15,9 @@ class SequelizeProvider {
             dialect: locals.db.dbDialect,
             username: locals.db.dbUsername,
             password: locals.db.dbPassword,
-            models: [__dirname + '../models'],
+            port: locals.db.dbPort,
+            host: locals.db.dbHost,
+            models: [__dirname.replace("provider", "models/relationship"),__dirname.replace("provider", "models")],
             storage: locals.db.storage
         };
 
