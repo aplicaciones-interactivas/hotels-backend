@@ -2,7 +2,6 @@ import {CrudRepository, ModelStatic} from "./CrudRepository";
 import {Model} from "sequelize-typescript";
 import {Identifier} from "sequelize";
 
-
 export abstract class SimpleBaseRepository<T extends Model, ID extends Identifier> implements CrudRepository<T, ID> {
 
     model: ModelStatic;
@@ -17,12 +16,19 @@ export abstract class SimpleBaseRepository<T extends Model, ID extends Identifie
         });
     }
 
-    deleteById(id: ID, options?: any): Promise<void> {
-        throw new Error('Method not implemented.');
+    deleteById(id: ID): Promise<number> {
+        //@ts-ignore
+        return this.model.destroy({
+            where: {id: id}
+        });
     }
 
     existsById(id: ID, options?: any): Promise<boolean> {
-        throw new Error('Method not implemented.');
+        return this.count({
+            id: id
+        }).then(result => {
+            return !!result;
+        })
     }
 
     findAll(filter?: any): Promise<Model<T>[]> {

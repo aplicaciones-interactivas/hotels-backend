@@ -1,13 +1,8 @@
 import {DataType, Sequelize} from 'sequelize-typescript';
 import {LocalsProvider} from "./Locals.provider";
-import {Dialect} from "sequelize";
-
 import {LoggerProvider} from './Logger.provider'
-import {Logger} from "typescript-logging";
-import {logger} from "sequelize/types/lib/utils/logger";
 
 class SequelizeProvider {
-
 
     _sequelize! : Sequelize;
     private getLogger(needLogger: boolean) {
@@ -16,7 +11,7 @@ class SequelizeProvider {
         } : false;
     }
 
-    public startDatabase(): Sequelize {
+    public startDatabase(namespace: string): Sequelize {
         const locals = LocalsProvider.getConfig();
 
         let options = {
@@ -38,6 +33,7 @@ class SequelizeProvider {
 
         //@ts-ignore
         this._sequelize = new Sequelize(options);
+
         return this._sequelize;
     }
 

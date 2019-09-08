@@ -22,7 +22,6 @@ describe('findAll', () => {
         expect(result[0]).to.have.property('code').eql('KB');
     });
 });
-
 describe('count', () => {
     it('should return quantity of entities persisted', async () => {
         let result = await repository.count();
@@ -43,4 +42,30 @@ describe('findById', () => {
         let result = await repository.findById(1);
         expect(result).property("code").eql('SB');
     });
+    it('with not existent id, should return null', async () => {
+        let result = await repository.findById(200000);
+        expect(result).to.be.null;
+    });
+});
+
+describe('deleteById', () => {
+    it('with existing id, should delete entity with id', async () => {
+        let before: any = await sequelizeProvider.sequelize.query("select count(*) from Beds", {type: QueryTypes.SELECT});
+        await repository.deleteById(1);
+        let after: any = await sequelizeProvider.sequelize.query("select count(*) from Beds", {type: QueryTypes.SELECT});
+        expect(after[0]["count(*)"]).eqls(before[0]["count(*)"] - 1);
+        //restore deleted entity
+        await sequelizeProvider.sequelize.query("INSERT INTO Beds(id, name,code) VALUES (1,'Single', 'SB');");
+    });
+});
+
+describe('existsById', () => {
+    it('with existing id, should return true', async () => {
+        let exists = await repository.existsById(1);
+        expect(exists).to.be.true;
+    });
+    it('with non existent id, should return false', async () => {
+        let exists = await repository.existsById(200000);
+        expect(exists).to.be.false;
+    })
 });

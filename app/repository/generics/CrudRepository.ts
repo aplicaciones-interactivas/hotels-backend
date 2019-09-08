@@ -8,7 +8,7 @@ export type ModelStatic = typeof Model & {
 export interface CrudRepository<T extends Model, ID> {
     count(filter?: any): Promise<number>;
 
-    deleteById(id: ID): Promise<void>;
+    deleteById(id: ID): Promise<number>;
 
     existsById(id: ID): Promise<boolean>;
 
