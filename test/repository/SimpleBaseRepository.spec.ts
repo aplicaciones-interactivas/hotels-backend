@@ -4,11 +4,10 @@ import {SimpleBaseRepository} from "../../app/repository/generics/SimpleBaseRepo
 import {Bed} from "../../app/models/Bed";
 import sequelizeProvider from '../../app/provider/Sequelize.provider';
 import {QueryTypes} from "sequelize";
-import SequelizeValidationError from 'sequelize-typescript';
 import {BedMapper} from "../../app/mapper/BedMapper";
+import {BedRepository} from "../../app/repository/BedRepository";
 
-const repository: SimpleBaseRepository<Bed> = new (class extends SimpleBaseRepository<Bed> {
-})(Bed, new BedMapper());
+const repository: SimpleBaseRepository<Bed> = new BedRepository(new BedMapper());
 describe('findAll', () => {
     it('should return list of persisted entities', async () => {
         let result = await repository.findAll();
