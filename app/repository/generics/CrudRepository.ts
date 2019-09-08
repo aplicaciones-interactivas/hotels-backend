@@ -16,7 +16,7 @@ export interface CrudRepository<T extends Model> {
 
     findById(id: number): Promise<T>;
 
-    create(instance: T): Promise<T>;
+    create(instance: any): Promise<T>;
 
     update(id: number, instance: any): Promise<T>;
 }

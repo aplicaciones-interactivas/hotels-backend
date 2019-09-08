@@ -1,18 +1,13 @@
 import {CrudRepository, ModelStatic} from "./CrudRepository";
 import {Model} from "sequelize-typescript";
-import {Identifier} from "sequelize";
-import {Mapper} from "../../mapper/Mapper";
-import injectable from "tsyringe/dist/typings/decorators/injectable";
 
 
 export abstract class SimpleBaseRepository<T extends Model> implements CrudRepository<T> {
 
     model: ModelStatic;
-    mapper: Mapper<T>;
 
-    protected constructor(model: ModelStatic, mapper: Mapper<T>) {
+    protected constructor(model: ModelStatic) {
         this.model = model;
-        this.mapper = mapper;
     }
 
     count(options?: any): Promise<number> {
@@ -46,18 +41,19 @@ export abstract class SimpleBaseRepository<T extends Model> implements CrudRepos
         return this.model.findByPk(id);
     }
 
-    create(instance: T): Promise<T> {
-        return this.model.create(this.mapper.toPersistance(instance));
+    create(instance: any): Promise<T> {
+        return this.model.create(instance);
     }
 
-    update(id: number, instance: T): Promise<T> {
-
-        return this.model.update(this.mapper.toPersistance(instance), {
+    update(id: number, instance: any): Promise<T> {
+        return this.model.update(instance, {
             where: {
                 id: id
             }
         }).then(res => {
-            return this.findById(id);
+            if (res[0])
+                return this.findById(id);
+            throw new Error("Entity with id=[" + id + "] not exists");
         });
     }
 
