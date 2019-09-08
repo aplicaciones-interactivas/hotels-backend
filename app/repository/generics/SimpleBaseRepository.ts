@@ -41,11 +41,11 @@ export abstract class SimpleBaseRepository<T extends Model, ID extends Identifie
         return this.model.findByPk(id);
     }
 
-    create(instance: T[] | T): Promise<T> | Promise<T[]> {
-        throw new Error('Method not implemented.');
+    create(instance: T): Promise<T> {
+        return instance.save();
     }
 
-    update(instance: T[] | T): Promise<T> | Promise<T[]> {
+    update(instance: T): Promise<T> | Promise<T> {
         throw new Error('Method not implemented.');
     }
 

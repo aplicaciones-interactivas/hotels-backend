@@ -4,6 +4,7 @@ import {SimpleBaseRepository} from "../../app/repository/generics/SimpleBaseRepo
 import {Bed} from "../../app/models/Bed";
 import sequelizeProvider from '../../app/provider/Sequelize.provider';
 import {QueryTypes} from "sequelize";
+import SequelizeValidationError from 'sequelize-typescript';
 
 const repository: SimpleBaseRepository<Bed, number> = new (class extends SimpleBaseRepository<Bed, number> {
 })(Bed);
@@ -69,3 +70,32 @@ describe('existsById', () => {
         expect(exists).to.be.false;
     })
 });
+
+describe('create', () => {
+    it('with valid entity, should return persisted entity', async () => {
+        let bed = Bed.build({
+            code: 'TB',
+            name: 'Triple Size Bed'
+        });
+        let persistedBed: Bed | Bed[] = await repository.create(bed);
+        let quantity: any = await sequelizeProvider.sequelize.query("select count(*) from Beds", {type: QueryTypes.SELECT});
+        quantity = quantity[0]["count(*)"];
+        expect(persistedBed.id).eqls(quantity);
+    });
+    it('with invalid entity, should throw error', async () => {
+        let bed = Bed.build({
+            name: 'Triple Size Bed'
+        });
+        expect(await handleError(async () => await repository.create(bed))).to.be.not.null;
+    });
+});
+
+async function handleError(func: Function): Promise<Error | undefined> {
+    let error: Error | undefined;
+    try {
+        await func();
+    } catch (err) {
+        error = err;
+    }
+    return error;
+}
