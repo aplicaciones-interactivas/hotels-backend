@@ -98,8 +98,18 @@ describe('update', () => {
         }));
         expect(result.name).eqls(name);
     });
-
-
+    it('with non existent id, should throw error', async () => {
+        let name = 'Triple Size BedDto 2';
+        expect(await handleError(async () => await repository.update(4, Bed.build({
+            name: name
+        })))).not.be.null;
+    });
+    it('with invalid actualization, should throw error', async () => {
+        let name: any = null;
+        expect(await handleError(async () => await repository.update(4, Bed.build({
+            name: name
+        })))).not.be.null;
+    });
 });
 
 async function handleError(func: Function): Promise<Error | undefined> {
