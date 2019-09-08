@@ -1,13 +1,16 @@
 import {CrudRepository, ModelStatic} from "./CrudRepository";
 import {Model} from "sequelize-typescript";
 import {Identifier} from "sequelize";
+import {Mapper} from "../../mapper/Mapper";
 
-export abstract class SimpleBaseRepository<T extends Model, ID extends Identifier> implements CrudRepository<T, ID> {
+export abstract class SimpleBaseRepository<T extends Model> implements CrudRepository<T> {
 
     model: ModelStatic;
+    mapper: Mapper<T>;
 
-    constructor(model: ModelStatic) {
+    constructor(model: ModelStatic, mapper: Mapper<T>) {
         this.model = model;
+        this.mapper = mapper;
     }
 
     count(options?: any): Promise<number> {
@@ -16,14 +19,14 @@ export abstract class SimpleBaseRepository<T extends Model, ID extends Identifie
         });
     }
 
-    deleteById(id: ID): Promise<number> {
+    deleteById(id: number): Promise<number> {
         //@ts-ignore
         return this.model.destroy({
             where: {id: id}
         });
     }
 
-    existsById(id: ID, options?: any): Promise<boolean> {
+    existsById(id: number, options?: any): Promise<boolean> {
         return this.count({
             id: id
         }).then(result => {
@@ -37,16 +40,23 @@ export abstract class SimpleBaseRepository<T extends Model, ID extends Identifie
         });
     }
 
-    findById(id: ID): Promise<T> {
+    findById(id: number): Promise<T> {
         return this.model.findByPk(id);
     }
 
     create(instance: T): Promise<T> {
-        return instance.save();
+        return this.model.create(this.mapper.toPersistance(instance));
     }
 
-    update(instance: T): Promise<T> | Promise<T> {
-        throw new Error('Method not implemented.');
+    update(id: number, instance: T): Promise<T> {
+
+        return this.model.update(this.mapper.toPersistance(instance), {
+            where: {
+                id: id
+            }
+        }).then(res => {
+            return this.findById(id);
+        });
     }
 
 }

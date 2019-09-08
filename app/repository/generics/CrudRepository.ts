@@ -5,18 +5,18 @@ export type ModelStatic = typeof Model & {
     new(values?: object, options?: BuildOptions): Model;
 }
 
-export interface CrudRepository<T extends Model, ID> {
+export interface CrudRepository<T extends Model> {
     count(filter?: any): Promise<number>;
 
-    deleteById(id: ID): Promise<number>;
+    deleteById(id: number): Promise<number>;
 
-    existsById(id: ID): Promise<boolean>;
+    existsById(id: number): Promise<boolean>;
 
     findAll(filter?: any): Promise<Model<T>[]>;
 
-    findById(id: ID): Promise<T>;
+    findById(id: number): Promise<T>;
 
     create(instance: T): Promise<T>;
 
-    update(instance: T): Promise<T>;
+    update(id: number, instance: any): Promise<T>;
 }

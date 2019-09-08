@@ -16,9 +16,9 @@ describe('HotelService', () => {
         it('Debe retornar todos los hoteles sin filtros', HotelServiceTestCases.findAll_conCienHotelesEnLaBase_retornaListaDeHoteles);
         it('Debe retornar 58 hoteles con filtro de 3 estrellas', HotelServiceTestCases.findAll_conFiltrosPor3Estrellas_retorna58Hoteles);
         it('Debe retornar 83 hoteles con filtro de 3 y 4 estrellas', HotelServiceTestCases.findAll_conFiltrosPor3Y4Estrellas_retorna83Hoteles);
-        it('Debe retornar un hotel con filtro por nombre Hotel Santa Cruz', HotelServiceTestCases.findAll_conFiltrosPorNombre_retornaUnHotel);
-        it('Debe retornar 59 hoteles con filtro por nombre que contiene Hotel', HotelServiceTestCases.findAll_conFiltrosPorParteDeNombre_retorna59Hoteles);
-        it('Debe retornar 1 hoteles con filtro por nombre Hotel Santa Cruz y 3 estrellas', HotelServiceTestCases.findAll_conFiltrosPorNombreY3Estrellas_retornaUnHotel);
+        it('Debe retornar un hotel con filtro por nombre HotelDto Santa Cruz', HotelServiceTestCases.findAll_conFiltrosPorNombre_retornaUnHotel);
+        it('Debe retornar 59 hoteles con filtro por nombre que contiene HotelDto', HotelServiceTestCases.findAll_conFiltrosPorParteDeNombre_retorna59Hoteles);
+        it('Debe retornar 1 hoteles con filtro por nombre HotelDto Santa Cruz y 3 estrellas', HotelServiceTestCases.findAll_conFiltrosPorNombreY3Estrellas_retornaUnHotel);
     });
 
     describe('guardar', () => {

@@ -5,9 +5,10 @@ import {Bed} from "../../app/models/Bed";
 import sequelizeProvider from '../../app/provider/Sequelize.provider';
 import {QueryTypes} from "sequelize";
 import SequelizeValidationError from 'sequelize-typescript';
+import {BedMapper} from "../../app/mapper/BedMapper";
 
-const repository: SimpleBaseRepository<Bed, number> = new (class extends SimpleBaseRepository<Bed, number> {
-})(Bed);
+const repository: SimpleBaseRepository<Bed> = new (class extends SimpleBaseRepository<Bed> {
+})(Bed, new BedMapper());
 describe('findAll', () => {
     it('should return list of persisted entities', async () => {
         let result = await repository.findAll();
@@ -75,19 +76,31 @@ describe('create', () => {
     it('with valid entity, should return persisted entity', async () => {
         let bed = Bed.build({
             code: 'TB',
-            name: 'Triple Size Bed'
+            name: 'Triple Size BedDto'
         });
-        let persistedBed: Bed | Bed[] = await repository.create(bed);
+        let persistedBed: Bed = await repository.create(bed);
         let quantity: any = await sequelizeProvider.sequelize.query("select count(*) from Beds", {type: QueryTypes.SELECT});
         quantity = quantity[0]["count(*)"];
         expect(persistedBed.id).eqls(quantity);
     });
     it('with invalid entity, should throw error', async () => {
         let bed = Bed.build({
-            name: 'Triple Size Bed'
+            name: 'Triple Size BedDto'
         });
         expect(await handleError(async () => await repository.create(bed))).to.be.not.null;
     });
+});
+
+describe('update', () => {
+    it('with existing id, with valid new values, should return updated entity', async () => {
+        let name = 'Triple Size BedDto 2';
+        let result = await repository.update(4, Bed.build({
+            name: name
+        }));
+        expect(result.name).eqls(name);
+    });
+
+
 });
 
 async function handleError(func: Function): Promise<Error | undefined> {

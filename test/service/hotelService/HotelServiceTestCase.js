@@ -27,21 +27,21 @@ module.exports = {
         });
     },
     findAll_conFiltrosPorNombre_retornaUnHotel(done) {
-        var filtros = {nombre: 'Hotel Santa Cruz'};
+        var filtros = {nombre: 'HotelDto Santa Cruz'};
         hotelService.findAll(filtros).then((hoteles) => {
             hoteles.length.should.be.eql(1);
             done();
         });
     },
     findAll_conFiltrosPorParteDeNombre_retorna59Hoteles(done) {
-        var filtros = {nombre: 'Hotel'};
+        var filtros = {nombre: 'HotelDto'};
         hotelService.findAll(filtros).then((hoteles) => {
             hoteles.length.should.be.eql(59);
             done();
         });
     },
     findAll_conFiltrosPorNombreY3Estrellas_retornaUnHotel(done) {
-        var filtros = {nombre: 'Hotel Santa Cruz', estrellas: [3]};
+        var filtros = {nombre: 'HotelDto Santa Cruz', estrellas: [3]};
         hotelService.findAll(filtros).then((hoteles) => {
             hoteles.length.should.be.eql(1);
             done();
@@ -49,7 +49,7 @@ module.exports = {
     },
     create_conHotelValido_retornaHotelConId(done) {
         var nuevoHotel = {
-            name: 'Hotel Stefanos',
+            name: 'HotelDto Stefanos',
             stars: 5
         };
 
@@ -61,7 +61,7 @@ module.exports = {
     },
     create_conHotelValido_conAmenities_retornaHotelConIdYAmenities(done) {
         var nuevoHotel = {
-            name: 'Hotel Stefanos',
+            name: 'HotelDto Stefanos',
             stars: 5,
             amenities: [1, 3]
         };
@@ -112,7 +112,7 @@ module.exports = {
     },
     create_conHotelValido_conAmenitiesInvalidos_lanzaError(done) {
         let nuevoHotel = {
-            name: 'Hotel Stefanos',
+            name: 'HotelDto Stefanos',
             stars: 5,
             amenities: [10000]
         };
@@ -125,7 +125,7 @@ module.exports = {
     },
     findOne_conIdValido_retornaHotel(done) {
         let id = 249942;
-        let hotelBuscado = 'Hotel Stefanos';
+        let hotelBuscado = 'HotelDto Stefanos';
         hotelService.findOne(id).then((hotel) => {
             hotel.name.should.be.equal(hotelBuscado);
             done();
@@ -168,12 +168,12 @@ module.exports = {
     },
     update_conHotelYIdValido_retornaHotelActualizado(done) {
         let nuevoHotel = {
-            name: 'Hotel Stefanos',
+            name: 'HotelDto Stefanos',
             stars: 5
         };
         let hotelAntes = {
             'id': 161901,
-            'name': 'Hotel Santa Cruz',
+            'name': 'HotelDto Santa Cruz',
             'stars': 3
         };
         let id = 161901;
@@ -186,7 +186,7 @@ module.exports = {
     },
     update_conIdInexistente_lanzaError(done) {
         let nuevoHotel = {
-            name: 'Hotel Stefanos',
+            name: 'HotelDto Stefanos',
             stars: 5
         };
         let id = 1619011;
@@ -239,13 +239,13 @@ module.exports = {
     update_conAmenities_retornaHotelActualizadoConAmenities(done) {
         let id = 161901;
         let nuevoHotel = {
-            name: 'Hotel Stefanos',
+            name: 'HotelDto Stefanos',
             stars: 5,
             amenities: [1, 3]
         };
         let hotelAntes = {
             'id': id,
-            'name': 'Hotel Santa Cruz',
+            'name': 'HotelDto Santa Cruz',
             'stars': 3
         };
 
