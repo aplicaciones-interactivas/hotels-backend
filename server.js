@@ -17,7 +17,7 @@ const winston = require('winston');
 
 models.sequelize.sync().then(function () {
     app.use(cors());
-    app.use(morgan('dev',  { stream: winston.stream.write }))
+    app.use(morgan('dev', {stream: winston.stream.write}))
     app.use(bodyParser.json());
     app.use(queryParser());
     app.use(bodyParser.urlencoded({extended: true}));

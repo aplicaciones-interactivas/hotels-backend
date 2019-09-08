@@ -1,6 +1,6 @@
 let express = require('express');
 
-class HotelRouter extends express.Router{
+class HotelRouter extends express.Router {
     constructor(hotelController) {
         super();
         this.get('/', hotelController.findAll.bind(hotelController));
@@ -10,4 +10,5 @@ class HotelRouter extends express.Router{
         this.put('/:id', hotelController.update.bind(hotelController));
     }
 }
+
 module.exports = HotelRouter;
