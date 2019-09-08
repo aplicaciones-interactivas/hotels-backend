@@ -1,11 +1,12 @@
 import {Application} from "express";
 import dotEnvFlow from "dotenv-flow";
+import toBoolean = require("validator/lib/toBoolean");
 
 export class LocalsProvider {
 
     public static config() {
         dotEnvFlow.config({
-            path: './app'
+            path: './conf'
         });
     }
 
@@ -13,13 +14,13 @@ export class LocalsProvider {
         const apiPrefix = process.env.API_PREFIX || 'api';
         const port = process.env.PORT || 4040;
         const url = process.env.APP_URL || `http://localhost:` + port;
-        const dbHost = process.env.DB_HOST || 'localhost';
-        const dbPort = process.env.DB_PORT || 3306;
-        const dbUsername = process.env.DB_USERNAME || 'root';
-        const dbPassword = process.env.DB_PASSWORD || undefined;
-        const dbDialect: string = process.env.DB_DIALECT || 'mysql';
-        const database: string = process.env.DB_DATABASE || 'hotels';
-        const storage: string | undefined = process.env.DB_STORAGE || undefined;
+        const dbHost = process.env.SEQUELIZE_DB_HOST || 'localhost';
+        const dbPort = process.env.SEQUELIZE_DB_PORT || 3306;
+        const dbUsername = process.env.SEQUELIZE_DB_USERNAME || 'root';
+        const dbPassword = process.env.SEQUELIZE_DB_PASSWORD || undefined;
+        const dbDialect: string = process.env.SEQUELIZE_DB_DIALECT || 'mysql';
+        const database: string = process.env.SEQUELIZE_DB_DATABASE || 'hotels';
+        const showSql: boolean = toBoolean(process.env.SEQUELIZE_SHOW_SQL || 'false');
         const cacheHost = process.env.REDIS_HOST || undefined;
         const cachePort = process.env.REDIS_PORT || undefined;
         const cacheUsername = process.env.REDIS_USERNAME || undefined;
@@ -38,7 +39,7 @@ export class LocalsProvider {
                 dbPassword,
                 dbDialect,
                 database,
-                storage
+                showSql
             },
             redis: {
                 redisHost: cacheHost,

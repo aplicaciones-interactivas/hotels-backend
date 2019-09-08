@@ -1,9 +1,9 @@
 import {CrudRepository, ModelStatic} from "./CrudRepository";
-import {Model, Sequelize} from "sequelize-typescript";
-import {BuildOptions} from "sequelize";
+import {Model} from "sequelize-typescript";
+import {Identifier} from "sequelize";
 
 
-export abstract class SimpleBaseRepository<T extends Model, ID> implements CrudRepository<T, ID> {
+export abstract class SimpleBaseRepository<T extends Model, ID extends Identifier> implements CrudRepository<T, ID> {
 
     model: ModelStatic;
 
@@ -11,16 +11,10 @@ export abstract class SimpleBaseRepository<T extends Model, ID> implements CrudR
         this.model = model;
     }
 
-    count(): Promise<number> {
-        throw new Error('Method not implemented.');
-    }
-
-    create(instance: T, options?: any): Promise<T> {
-        throw new Error('Method not implemented.');
-    }
-
-    createAll(instance: T[], options?: any): Promise<T[]> {
-        throw new Error('Method not implemented.');
+    count(options?: any): Promise<number> {
+        return this.model.count({
+            where: options
+        });
     }
 
     deleteById(id: ID, options?: any): Promise<void> {
@@ -31,19 +25,21 @@ export abstract class SimpleBaseRepository<T extends Model, ID> implements CrudR
         throw new Error('Method not implemented.');
     }
 
-    findAll(options?: any): Promise<Model<T>[]> {
-        return this.model.findAll(options);
+    findAll(filter?: any): Promise<Model<T>[]> {
+        return this.model.findAll({
+            where: filter
+        });
     }
 
-    findById(id: ID, options?: any): Promise<T> {
+    findById(id: ID): Promise<T> {
+        return this.model.findByPk(id);
+    }
+
+    create(instance: T[] | T): Promise<T> | Promise<T[]> {
         throw new Error('Method not implemented.');
     }
 
-    update(instance: T, options?: any): Promise<T> {
-        throw new Error('Method not implemented.');
-    }
-
-    updateAll(instance: T[], options?: any): Promise<T[]> {
+    update(instance: T[] | T): Promise<T> | Promise<T[]> {
         throw new Error('Method not implemented.');
     }
 

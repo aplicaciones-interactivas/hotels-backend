@@ -1,11 +1,20 @@
-import {Sequelize} from 'sequelize-typescript';
+import {DataType, Sequelize} from 'sequelize-typescript';
 import {LocalsProvider} from "./Locals.provider";
 import {Dialect} from "sequelize";
 
 import {LoggerProvider} from './Logger.provider'
 import {Logger} from "typescript-logging";
+import {logger} from "sequelize/types/lib/utils/logger";
 
 class SequelizeProvider {
+
+
+    _sequelize! : Sequelize;
+    private getLogger(needLogger: boolean) {
+        return needLogger ? function (...args: any) {
+            LoggerProvider.getLogger("sequelize").debug(args[0]);
+        } : false;
+    }
 
     public startDatabase(): Sequelize {
         const locals = LocalsProvider.getConfig();
@@ -18,12 +27,22 @@ class SequelizeProvider {
             port: locals.db.dbPort,
             host: locals.db.dbHost,
             models: [__dirname.replace("provider", "models/relationship"), __dirname.replace("provider", "models")],
-            storage: locals.db.storage
+            logging: this.getLogger(locals.db.showSql),
+            dialectOptions: {
+                multipleStatements: true
+            },
+            define: {
+                timestamps: false
+            }
         };
 
         //@ts-ignore
-        let sequelize = new Sequelize(options);
-        return sequelize;
+        this._sequelize = new Sequelize(options);
+        return this._sequelize;
+    }
+
+    get sequelize() {
+        return this._sequelize
     }
 
 }
