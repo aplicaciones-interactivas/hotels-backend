@@ -1,60 +1,35 @@
-import {CrudRepository, ModelStatic} from "./CrudRepository";
+import {CRUDRepository, ModelStatic} from "./CRUDRepository";
 import {Model} from "sequelize-typescript";
+import {JoinableBaseRepository} from "./JoinableBaseRepository";
 
 
-export abstract class SimpleBaseRepository<T extends Model> implements CrudRepository<T> {
+export abstract class SimpleBaseRepository<T extends Model> extends JoinableBaseRepository<T> implements CRUDRepository<T> {
 
-    model: ModelStatic;
-
-    protected constructor(model: ModelStatic) {
-        this.model = model;
+    public count(options?: any): Promise<number> {
+        return super.count(options);
     }
 
-    count(options?: any): Promise<number> {
-        return this.model.count({
-            where: options
-        });
+    public deleteById(id: number): Promise<number> {
+        return super.deleteById(id);
     }
 
-    deleteById(id: number): Promise<number> {
-        //@ts-ignore
-        return this.model.destroy({
-            where: {id: id}
-        });
+    public existsById(id: number, options?: any): Promise<boolean> {
+        return super.existsById(id, options);
     }
 
-    existsById(id: number, options?: any): Promise<boolean> {
-        return this.count({
-            id: id
-        }).then(result => {
-            return !!result;
-        })
+    public findAll(filter?: any): Promise<T[]> {
+        return super.findAll(filter);
     }
 
-    findAll(filter?: any): Promise<Model<T>[]> {
-        return this.model.findAll({
-            where: filter
-        });
+    public findById(id: number): Promise<T> {
+        return super.findById(id);
     }
 
-    findById(id: number): Promise<T> {
-        return this.model.findByPk(id);
+    public create(instance: any): Promise<T> {
+        return super.create(instance);
     }
 
-    create(instance: any): Promise<T> {
-        return this.model.create(instance);
+    public update(id: number, instance: any): Promise<T> {
+        return super.update(id, instance);
     }
-
-    update(id: number, instance: any): Promise<T> {
-        return this.model.update(instance, {
-            where: {
-                id: id
-            }
-        }).then(res => {
-            if (res[0])
-                return this.findById(id);
-            throw new Error("Entity with id=[" + id + "] not exists");
-        });
-    }
-
 }

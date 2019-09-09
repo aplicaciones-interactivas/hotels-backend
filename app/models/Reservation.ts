@@ -2,13 +2,7 @@ import {AllowNull, BelongsTo, Column, DataType, ForeignKey, Model, Scopes, Table
 import {Room} from "./Room";
 import {MealPlan} from "./MealPlan";
 import {User} from "./User";
-import {MealPlanInclusion, RoomInclusion, UserInclusion} from "./scopes/Inclusions";
 
-@Scopes(() => ({
-    withAll: {
-        include: [RoomInclusion, MealPlanInclusion, UserInclusion]
-    }
-}))
 @Table
 export class Reservation extends Model<Reservation> {
 

@@ -11,13 +11,7 @@ import {Role} from "./Role";
 import {UserRole} from "./relationship/UserRole";
 import {UsernameValidator} from "./validations/impl/UsernameValidator";
 import {Organization} from "./Organization";
-import {RoleInclusion} from "./scopes/Inclusions";
 
-@Scopes(() => ({
-    withRoles: {
-        include: [RoleInclusion]
-    }
-}))
 @Table
 export class User extends Model<User> {
 

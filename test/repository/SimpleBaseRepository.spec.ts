@@ -8,11 +8,11 @@ import {QueryTypes} from "sequelize";
 import {BedRepository} from "../../app/repository/BedRepository";
 import {UserRepository} from "../../app/repository/UserRepository";
 import {User} from "../../app/models/User";
+import {JoinableBaseRepository} from "../../app/repository/generics/JoinableBaseRepository";
 
 const repository: SimpleBaseRepository<Bed> = new BedRepository();
-const scopeableRepository: SimpleBaseRepository<User> = new UserRepository();
 
-describe('findAll', () => {
+describe('SimpleBaseRepository.findAll', () => {
     it('should return list of persisted entities', async () => {
         let result = await repository.findAll();
         let rawResult: any = await sequelizeProvider.sequelize.query("select count(*) from Beds", {type: QueryTypes.SELECT});
@@ -27,7 +27,7 @@ describe('findAll', () => {
         expect(result[0]).to.have.property('code').eql('KB');
     });
 });
-describe('count', () => {
+describe('SimpleBaseRepository.count', () => {
     it('should return quantity of entities persisted', async () => {
         let result = await repository.count();
         let rawResult: any = await sequelizeProvider.sequelize.query("select count(*) from Beds", {type: QueryTypes.SELECT});
@@ -42,7 +42,7 @@ describe('count', () => {
     });
 });
 
-describe('findById', () => {
+describe('SimpleBaseRepository.findById', () => {
     it('with existing id, should return entity by id', async () => {
         let result = await repository.findById(1);
         expect(result).property("code").eql('SB');
@@ -53,7 +53,7 @@ describe('findById', () => {
     });
 });
 
-describe('deleteById', () => {
+describe('SimpleBaseRepository.deleteById', () => {
     it('with existing id, should delete entity with id', async () => {
         let before: any = await sequelizeProvider.sequelize.query("select count(*) from Beds", {type: QueryTypes.SELECT});
         await repository.deleteById(1);

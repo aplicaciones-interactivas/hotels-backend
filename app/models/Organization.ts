@@ -11,17 +11,7 @@ import {
 } from "sequelize-typescript";
 import {Hotel} from "./Hotel";
 import {User} from "./User";
-import {HotelInclusion, UserInclusion} from "./scopes/Inclusions";
 
-
-@Scopes(() => ({
-    withHotels: {
-        include: [HotelInclusion]
-    },
-    withUsers: {
-        include: [UserInclusion]
-    }
-}))
 @Table
 export class Organization extends Model<Organization> {
 

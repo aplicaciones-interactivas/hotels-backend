@@ -17,25 +17,7 @@ import {MealPlanHotel} from "./relationship/MealPlanHotel";
 import {RoomHotel} from "./relationship/RoomHotel";
 import {HotelImage} from "./relationship/HotelImage";
 import {Organization} from "./Organization";
-import {AmenityInclusion, HotelImageInclusion, RoomInclusion} from "./scopes/Inclusions";
 
-@Scopes(() => ({
-    withAmenities: {
-        include: [AmenityInclusion]
-    },
-    withRooms: {
-        include: [RoomInclusion]
-    },
-    withMealPlans: {
-        include: [MealPlan]
-    },
-    withImage: {
-        include: [HotelImageInclusion]
-    },
-    withAll: {
-        include: [AmenityInclusion, RoomInclusion, MealPlan, HotelImageInclusion]
-    }
-}))
 @Table
 export class Hotel extends Model<Hotel> {
 

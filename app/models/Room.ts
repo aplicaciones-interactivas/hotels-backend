@@ -4,20 +4,8 @@ import {Amenity} from "./Amenity";
 import {RoomAmenity} from "./relationship/RoomAmenity";
 import {Bed} from "./Bed";
 import {RoomBed} from "./relationship/RoomBed";
-import {AmenityInclusion, BedInclusion} from "./scopes/Inclusions";
 
 
-@Scopes(() => ({
-    withAmenities: {
-        include: [AmenityInclusion]
-    },
-    withBeds: {
-        include: [BedInclusion]
-    },
-    withAll: {
-        include: [AmenityInclusion, BedInclusion]
-    }
-}))
 @Table
 export class Room extends Model<Room> {
 
