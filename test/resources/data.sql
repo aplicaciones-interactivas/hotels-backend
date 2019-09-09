@@ -11,3 +11,17 @@ INSERT INTO Beds(id, name,code) VALUES
 (2,'Double', 'DB'),
 (3,'Queen Size', 'QB'),
 (4,'King Size', 'KB');
+INSERT INTO Organizations(id, billingAddress, country, billingIdentifier, name) VALUES
+(1, 'Rua das Figueiras, 501 - Jardim - Santo André', 'BRA', '111111111', 'CVC'),
+(2, 'GENERAL RIERA, 154', 'ESP', '22222222', 'Iberostar');
+INSERT INTO Users(id, username, password, email, organizationId) VALUES
+(1, 'edhernandez', '$2y$12$S8Qdgk2//.TuObluwUNEdeTpL1N6V8WH.umzzaxzsEeJSBI1f8maS', 'hernandezed.1991@cvc.com.br', 1),
+(2, 'jhondoe', '$2y$12$S8Qdgk2//.TuObluwUNEdeTpL1N6V8WH.umzzaxzsEeJSBI1f8maS', 'jhon.doe@gmail.com', null);
+INSERT INTO Roles(id, roleName) VALUES
+(1, 'ADMIN'),
+(2, 'USER');
+INSERT INTO UserRoles(userId, roleId) values
+(1,1),
+(2,2);
+INSERT INTO UserOrganizations(userId, organizationId) VALUES
+(1,1);

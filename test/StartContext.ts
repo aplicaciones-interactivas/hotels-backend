@@ -36,7 +36,11 @@ dockerConfiguration.start().then(async () => {
 
         let sqlFile: string = fs.readFileSync('./test/resources/data.sql', 'utf-8');
 
-        await sequelize.query(sqlFile);
+        try {
+            await sequelize.query(sqlFile);
+        }catch (e) {
+            console.log(e);
+        }
 
         await new Promise((resolve) => {
             mocha.run(async (unsuccessful) => {

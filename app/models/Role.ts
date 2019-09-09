@@ -8,5 +8,5 @@ export class Role extends Model<Role> {
     id!: number;
     @AllowNull(false)
     @Column(DataType.STRING(50))
-    role_name!: string;
+    roleName!: string;
 }

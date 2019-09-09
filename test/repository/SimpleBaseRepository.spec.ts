@@ -6,8 +6,12 @@ import sequelizeProvider from '../../app/provider/Sequelize.provider';
 import {QueryTypes} from "sequelize";
 
 import {BedRepository} from "../../app/repository/BedRepository";
+import {UserRepository} from "../../app/repository/UserRepository";
+import {User} from "../../app/models/User";
 
 const repository: SimpleBaseRepository<Bed> = new BedRepository();
+const scopeableRepository: SimpleBaseRepository<User> = new UserRepository();
+
 describe('findAll', () => {
     it('should return list of persisted entities', async () => {
         let result = await repository.findAll();
