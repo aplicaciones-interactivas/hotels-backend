@@ -3,12 +3,12 @@ import * as passport from 'passport';
 
 
 class Passport {
-    public exec(): void {
+    public initAuth(): void {
         try {
             Local.init(passport);
-        } catch (_err) {
+        } catch (err) {
             //Instanciar ErrorHandler
-            console.log(_err.stack);
+            console.log(err.stack);
         }
     }
 
