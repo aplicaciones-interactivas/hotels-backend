@@ -50,3 +50,5 @@ export class User extends Model<User> {
 
 }
 
+export default User;
+
