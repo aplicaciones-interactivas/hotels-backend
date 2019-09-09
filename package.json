@@ -49,7 +49,7 @@
   },
   "scripts": {
     "server": "node server.js",
-    "run-dev": "ts-node app/index.ts",
+    "dev": "NODE_ENV=development ts-node app/index.ts",
     "test": "ts-node ./test/StartContext.ts"
   }
 }

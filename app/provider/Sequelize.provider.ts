@@ -11,7 +11,7 @@ class SequelizeProvider {
         } : false;
     }
 
-    public startDatabase(namespace: string): Sequelize {
+    public startDatabase(): Sequelize {
         const locals = LocalsProvider.getConfig();
 
         let options = {

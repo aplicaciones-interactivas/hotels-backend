@@ -4,10 +4,10 @@ import {SimpleBaseRepository} from "../../app/repository/generics/SimpleBaseRepo
 import {Bed} from "../../app/models/Bed";
 import sequelizeProvider from '../../app/provider/Sequelize.provider';
 import {QueryTypes} from "sequelize";
-import {BedMapper} from "../../app/mapper/BedMapper";
+
 import {BedRepository} from "../../app/repository/BedRepository";
 
-const repository: SimpleBaseRepository<Bed> = new BedRepository(new BedMapper());
+const repository: SimpleBaseRepository<Bed> = new BedRepository();
 describe('findAll', () => {
     it('should return list of persisted entities', async () => {
         let result = await repository.findAll();
@@ -73,42 +73,42 @@ describe('existsById', () => {
 
 describe('create', () => {
     it('with valid entity, should return persisted entity', async () => {
-        let bed = Bed.build({
+        let bed = {
             code: 'TB',
             name: 'Triple Size BedDto'
-        });
+        };
         let persistedBed: Bed = await repository.create(bed);
         let quantity: any = await sequelizeProvider.sequelize.query("select count(*) from Beds", {type: QueryTypes.SELECT});
         quantity = quantity[0]["count(*)"];
         expect(persistedBed.id).eqls(quantity);
     });
     it('with invalid entity, should throw error', async () => {
-        let bed = Bed.build({
+        let bed = {
             name: 'Triple Size BedDto'
-        });
-        expect(await handleError(async () => await repository.create(bed))).to.be.not.null;
+        };
+        expect(await handleError(async () => await repository.create(bed))).to.be.not.undefined;
     });
 });
 
 describe('update', () => {
     it('with existing id, with valid new values, should return updated entity', async () => {
         let name = 'Triple Size BedDto 2';
-        let result = await repository.update(4, Bed.build({
+        let result = await repository.update(1, {
             name: name
-        }));
+        });
         expect(result.name).eqls(name);
     });
     it('with non existent id, should throw error', async () => {
         let name = 'Triple Size BedDto 2';
-        expect(await handleError(async () => await repository.update(4, Bed.build({
+        expect(await handleError(async () => await repository.update(200000, {
             name: name
-        })))).not.be.null;
+        }))).to.be.not.undefined;
     });
     it('with invalid actualization, should throw error', async () => {
         let name: any = null;
-        expect(await handleError(async () => await repository.update(4, Bed.build({
+        expect(await handleError(async () => await repository.update(4, {
             name: name
-        })))).not.be.null;
+        }))).to.be.not.undefined;
     });
 });
 
