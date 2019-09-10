@@ -60,9 +60,37 @@ describe('JoinableBaseRepository.create', () => {
         expect(user.roles[0].roleName).to.be.eqls('USER');
         await user.destroy();
     });
+    /*it('with include, without required relationship, should throw error', async () => {
+        expect(await handleError(async () => await repository.create({
+            username: 'newUserToPersist',
+            password: '123456',
+            email: 'newUser@mail.com',
+            organizationId: 1,
+            roles: []
+        }, roleInclude))).is.not.undefined;
+
+    });*/
 });
 
-describe('update', () => {
+describe('JoinableBaseRepository.update', () => {
+    it('with include and set relationship, should return entity with associations', async () => {
+        let user = await repository.update(1,{
+            username: 'hernandezed',
+            password: '123456',
+            email: 'newUser@mail.com',
+            organizationId: 2,
+        }, roleInclude);
+        expect(user.id).to.be.eqls(1);
+        expect(user.username).to.be.eqls('hernandezed');
+        expect(user.password).to.be.eqls('123456');
+        expect(user.email).to.be.eqls('newUser@mail.com');
+        expect(user.organizationId).to.be.eqls(2);
+        expect(user.roles).to.has.length(1);
+        expect(user.roles[0].roleName).to.be.eqls('ADMIN');
+        await user.destroy();
+        await sequelizeProvider.sequelize.query("INSERT INTO Users(id, username, password, email, organizationId) VALUES(1, 'edhernandez', '$2y$12$S8Qdgk2//.TuObluwUNEdeTpL1N6V8WH.umzzaxzsEeJSBI1f8maS', 'hernandezed.1991@cvc.com.br', 1)");
+        await sequelizeProvider.sequelize.query("INSERT INTO UserRoles(userId, roleId) values(1,1),");
+    });
 });
 
 async function handleError(func: Function): Promise<Error | undefined> {

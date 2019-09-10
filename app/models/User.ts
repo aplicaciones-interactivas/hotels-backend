@@ -39,8 +39,12 @@ export class User extends Model<User> {
     @Column(DataType.BIGINT)
     organizationId!: number;
 
-    @BelongsToMany(() => Role, () => UserRole)
-    roles!: Role[];
+    @BelongsToMany(() => Role, {
+        through: () => UserRole,
+        onDelete: 'CASCADE',
+        onUpdate: 'NO ACTION'
+    })
+    roles!: Array<Role & { UserRole: UserRole }>;
 
 }
 
