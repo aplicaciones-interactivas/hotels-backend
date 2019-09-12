@@ -1,35 +1,26 @@
-import {AllowNull, BelongsTo, Column, DataType, ForeignKey, Model, Scopes, Table} from "sequelize-typescript";
 import {Room} from "./Room";
 import {MealPlan} from "./MealPlan";
 import {User} from "./User";
+import {Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {IsNotEmpty} from "class-validator";
 
-@Table
-export class Reservation extends Model<Reservation> {
-
-    @BelongsTo(() => Room)
+@Entity()
+export class Reservation {
+    @PrimaryGeneratedColumn()
+    id!: number;
+    @ManyToOne(() => Room)
     room!: Room;
-    @AllowNull(false)
-    @Column(DataType.DATE)
+    @Column("datetime")
+    @IsNotEmpty()
     from!: Date;
-    @AllowNull(false)
-    @Column(DataType.DATE)
+    @Column("datetime")
+    @IsNotEmpty()
     until!: Date;
-    @BelongsTo(()=> MealPlan)
+    @ManyToOne(() => MealPlan)
+    @JoinColumn()
     mealPlan?: MealPlan;
-    @BelongsTo(()=> User)
+    @ManyToOne(() => User)
+    @JoinColumn()
     user!: User;
-
-    @ForeignKey(() => Room)
-    @Column(DataType.BIGINT)
-    roomId!: number;
-
-    @ForeignKey(() => MealPlan)
-    @Column(DataType.BIGINT)
-    mealPlanId!: number;
-
-    @ForeignKey(() => User)
-    @Column(DataType.BIGINT)
-    userId!: number;
-
 
 }

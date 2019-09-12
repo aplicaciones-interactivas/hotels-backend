@@ -1,36 +1,33 @@
-import {AllowNull, HasMany, Model, Scopes, Table} from "sequelize-typescript";
-import {AutoIncrement, BelongsToMany, Column, DataType, PrimaryKey} from "sequelize-typescript";
 import {Amenity} from "./Amenity";
-import {RoomAmenity} from "./relationship/RoomAmenity";
 import {Bed} from "./Bed";
-import {RoomBed} from "./relationship/RoomBed";
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn} from "typeorm";
+import {IsNotEmpty} from "class-validator";
 
-
-@Table
-export class Room extends Model<Room> {
-
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+@Entity()
+export class Room {
+    @PrimaryGeneratedColumn()
     id!: number;
 
-    @AllowNull(false)
-    @Column(DataType.ENUM('SINGLE', 'DOUBLE', 'TRIPLE', 'QUAD', 'QUEEN', 'KING', 'DOUBLE_DOUBLE', 'STUDIO', 'SUITE', 'MASTER_SUITE', 'JUNIOR_SUITE'))
+    //@Column(DataType.ENUM('SINGLE', 'DOUBLE', 'TRIPLE', 'QUAD', 'QUEEN', 'KING', 'DOUBLE_DOUBLE', 'STUDIO', 'SUITE', 'MASTER_SUITE', 'JUNIOR_SUITE'))
+    @IsNotEmpty()
+    @Column("varchar")
     type!: string;
 
-    @Column(DataType.INTEGER)
+    @Column("integer")
     maxOcupancy?: number;
 
-    @Column(DataType.DOUBLE)
+    @Column("decimal")
     surfaceArea?: number;
 
-    @Column(DataType.INTEGER)
+    @Column("integer")
     guests?: number;
 
-    @BelongsToMany(() => Amenity, () => RoomAmenity)
+    @ManyToMany(() => Amenity)
+    @JoinTable()
     amenities?: Amenity[];
 
-    @BelongsToMany(() => Bed, () => RoomBed)
+    @ManyToMany(() => Bed)
+    @JoinTable()
     beds?: Bed[];
 
 }

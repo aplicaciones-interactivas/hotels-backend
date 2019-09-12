@@ -1,17 +1,16 @@
-import {AllowNull, AutoIncrement, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {IsNotEmpty} from "class-validator";
 
-@Table
-export class Bed extends Model<Bed> {
+@Entity()
+export class Bed {
 
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+    @PrimaryGeneratedColumn()
     id!: number;
-    @AllowNull(false)
-    @Column(DataType.STRING(100))
+    @Column("varchar")
+    @IsNotEmpty()
     name!: string;
-    @AllowNull(false)
-    @Column(DataType.STRING(10))
+    @Column("varchar")
+    @IsNotEmpty()
     code!: string;
 
 }

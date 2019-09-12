@@ -1,12 +1,11 @@
-import {AllowNull, AutoIncrement, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {IsNotEmpty} from "class-validator";
 
-@Table
-export class Role extends Model<Role> {
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+@Entity()
+export class Role {
+    @PrimaryGeneratedColumn()
     id!: number;
-    @AllowNull(false)
-    @Column(DataType.STRING(50))
+    @Column()
+    @IsNotEmpty()
     roleName!: string;
 }

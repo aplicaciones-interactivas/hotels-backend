@@ -2,7 +2,7 @@ import dockerConfiguration from './DockerConfiguration';
 import Mocha from 'mocha';
 import * as fs from "fs";
 import * as path from 'path';
-import {Sequelize} from "sequelize-typescript";
+import {seeder} from './resources/MySql.seeder';
 
 let cleanExit = 1;
 
@@ -26,26 +26,16 @@ dockerConfiguration.start().then(async () => {
         fs.writeFileSync('./conf/.env.test', content);
 
         require("../app/provider/Application.provider").default.loadServer();
-        let sequelize = require('../app/provider/Sequelize.provider').default.startDatabase();
         require('../app/provider/Cache.provider').default.startCache();
+        let connection: any = await require('../app/provider/TypeORM.provider').default.startDatabase();
 
-        await waitForMysql(sequelize);
+        await connection.synchronize(true);
 
-
-        await sequelize.sync();
-
-        let sqlFile: string = fs.readFileSync('./test/resources/data.sql', 'utf-8');
-
-        try {
-            await sequelize.query(sqlFile);
-        }catch (e) {
-            console.log(e);
-        }
+        await seeder(connection);
 
         await new Promise((resolve) => {
             mocha.run(async (unsuccessful) => {
                 cleanExit = unsuccessful;
-                await sequelize.close();
                 resolve();
             });
         })
@@ -55,6 +45,8 @@ dockerConfiguration.start().then(async () => {
         process.exit(cleanExit ? 1 : 0);
     }
 
+}).catch(err => {
+    console.log(err);
 });
 
 
@@ -80,17 +72,4 @@ function recFindByExt(base: string, ext: string, files: string[] | null, result:
 
 function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function waitForMysql(sequelize: Sequelize) {
-    //wait for mysql ready for accept connections
-    for (; ;) {
-        try {
-            await sequelize.authenticate();
-            break;
-        } catch (ex) {
-            await sleep(1000);
-        }
-    }
-
 }

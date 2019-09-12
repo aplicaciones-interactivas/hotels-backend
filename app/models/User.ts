@@ -1,50 +1,35 @@
-import {
-    Table,
-    Column,
-    Model,
-    PrimaryKey,
-    AutoIncrement,
-    Unique,
-    Is, DataType, IsEmail, AllowNull, BelongsToMany, ForeignKey, Scopes
-} from 'sequelize-typescript';
 import {Role} from "./Role";
-import {UserRole} from "./relationship/UserRole";
-import {UsernameValidator} from "./validations/impl/UsernameValidator";
 import {Organization} from "./Organization";
+import {Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Length, IsEmail, IsFQDN, IsDate, Min, Max, IsNotEmpty} from "class-validator";
 
-@Table
-export class User extends Model<User> {
 
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+@Entity()
+export class User {
+    @PrimaryGeneratedColumn()
     id!: number;
 
-    @Unique
-    @AllowNull(false)
-    @Is(new UsernameValidator().validate)
-    @Column(DataType.STRING(20))
+    @Column("varchar")
+    @Length(20)
+    @IsNotEmpty()
     username!: string;
 
-    @AllowNull(false)
-    @Column(DataType.STRING(255))
+    @Column("varchar")
+    @IsNotEmpty()
     password!: string;
 
-    @AllowNull(false)
-    @IsEmail
-    @Column(DataType.STRING(255))
+    @Column("varchar")
+    @IsEmail()
+    @IsNotEmpty()
     email!: string;
 
-    @ForeignKey(() => Organization)
-    @Column(DataType.BIGINT)
-    organizationId!: number;
+    @ManyToOne(() => Organization)
+    @JoinColumn()
+    organization?: Organization;
 
-    @BelongsToMany(() => Role, {
-        through: () => UserRole,
-        onDelete: 'CASCADE',
-        onUpdate: 'NO ACTION'
-    })
-    roles!: Array<Role & { UserRole: UserRole }>;
+    @ManyToMany(type => Role)
+    @JoinTable()
+    roles!: Role[];
 
 }
 

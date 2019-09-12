@@ -1,19 +1,18 @@
-import {AllowNull, AutoIncrement, Column, DataType, Model, PrimaryKey, Table} from "sequelize-typescript";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {IsNotEmpty} from "class-validator";
 
-@Table
-export class MealPlan extends Model<MealPlan> {
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+@Entity()
+export class MealPlan {
+    @PrimaryGeneratedColumn()
     id!: number;
-    @AllowNull(false)
-    @Column(DataType.STRING(255))
+    @Column("varchar")
+    @IsNotEmpty()
     name!: string;
-    @AllowNull(false)
-    @Column(DataType.TEXT)
+    @Column("varchar")
+    @IsNotEmpty()
     description!: string;
-    @AllowNull(false)
-    @Column(DataType.STRING(2))
+    @Column("varchar")
+    @IsNotEmpty()
     code!: string;
 
 }

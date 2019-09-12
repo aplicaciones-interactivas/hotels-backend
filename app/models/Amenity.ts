@@ -1,14 +1,13 @@
-import {AllowNull, AutoIncrement, Column, DataType, Model, PrimaryKey, Scopes, Table} from "sequelize-typescript";
+import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {IsNotEmpty} from "class-validator";
 
-@Table
-export class Amenity extends Model {
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+@Entity()
+export class Amenity {
+    @PrimaryGeneratedColumn()
     id!: number;
-    @Column(DataType.STRING(10))
+    @Column("varchar")
     code!: string;
-    @AllowNull(false)
-    @Column(DataType.TEXT)
+    @Column("text")
+    @IsNotEmpty()
     description!: string;
 }

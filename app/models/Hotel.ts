@@ -1,68 +1,59 @@
-import {
-    AllowNull,
-    AutoIncrement,
-    BelongsToMany,
-    Column,
-    DataType, ForeignKey,
-    HasMany,
-    IsEmail,
-    Model,
-    PrimaryKey, Scopes, Table
-} from "sequelize-typescript";
 import {Amenity} from './Amenity';
-import {HotelAmenity} from "./relationship/HotelAmenity";
 import {Room} from "./Room";
 import {MealPlan} from "./MealPlan";
-import {MealPlanHotel} from "./relationship/MealPlanHotel";
-import {RoomHotel} from "./relationship/RoomHotel";
-import {HotelImage} from "./relationship/HotelImage";
 import {Organization} from "./Organization";
+import {Column, Entity, ManyToOne, ManyToMany, PrimaryGeneratedColumn, JoinColumn, JoinTable} from "typeorm";
+import {IsEmail, IsNotEmpty} from "class-validator";
+import {HotelImage} from "./HotelImage";
 
-@Table
-export class Hotel extends Model<Hotel> {
+@Entity()
+export class Hotel {
 
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+    @PrimaryGeneratedColumn()
     id!: number;
-    @AllowNull(false)
-    @Column(DataType.STRING(255))
+
+    @Column("varchar")
+    @IsNotEmpty()
     name!: string;
-    @IsEmail
-    @Column(DataType.STRING(255))
+    @Column("varchar")
+    @IsEmail()
     contactEmail?: string;
-    @Column(DataType.STRING(30))
+    @Column("varchar")
     primaryContactPhone?: string;
-    @Column(DataType.STRING(30))
+    @Column("varchar")
     secondaryContactPhone?: string;
-    @Column(DataType.TIME)
-    checkinTime?: Date;
-    @Column(DataType.TIME)
-    checkoutTime?: Date;
-    @Column(DataType.INTEGER)
+    @Column("varchar")
+    checkinTime?: string;
+    @Column("varchar")
+    checkoutTime?: string;
+    @Column("integer")
     stars?: number;
-    @Column(DataType.ENUM('HOTEL', 'APART', 'HOSTEL', 'OTHER'))
+    //@Column(DataType.ENUM('HOTEL', 'APART', 'HOSTEL', 'OTHER'))
+    @Column("varchar")
     category?: string;
     //esto se puede reemplazar luego por geolocalizacion
-    @AllowNull(false)
-    @Column(DataType.STRING(50))
+    @Column("varchar")
+    @IsNotEmpty()
     country!: string;
-    @AllowNull(false)
-    @Column(DataType.STRING(50))
+    @Column("varchar")
+    @IsNotEmpty()
     city!: string;
-    @AllowNull(false)
-    @Column(DataType.TEXT)
+    @Column("text")
+    @IsNotEmpty()
     address!: string;
-    @BelongsToMany(() => Amenity, () => HotelAmenity)
+    @ManyToMany(() => Amenity)
+    @JoinTable()
     amenities?: Amenity[];
-    @BelongsToMany(() => Room, () => RoomHotel)
+    @ManyToMany(() => Room)
+    @JoinTable()
     rooms?: Room[];
-    @BelongsToMany(() => MealPlan, () => MealPlanHotel)
+    @ManyToMany(() => MealPlan)
+    @JoinTable()
     mealPlans?: MealPlan[];
-    @HasMany(() => HotelImage)
+    @ManyToMany(() => HotelImage)
+    @JoinTable()
     images?: HotelImage[];
-    @AllowNull(false)
-    @ForeignKey(()=> Organization)
-    @Column(DataType.BIGINT)
-    organizationId?: number;
+    @ManyToOne(() => Organization)
+    @JoinColumn()
+    organization?: Organization;
 }

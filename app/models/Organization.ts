@@ -1,45 +1,36 @@
-import {
-    AllowNull,
-    AutoIncrement,
-    Column,
-    DataType,
-    HasMany,
-    Model,
-    PrimaryKey,
-    Scopes,
-    Table
-} from "sequelize-typescript";
 import {Hotel} from "./Hotel";
 import {User} from "./User";
+import {Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {IsNotEmpty} from "class-validator";
 
-@Table
-export class Organization extends Model<Organization> {
+@Entity()
+export class Organization {
 
-    @PrimaryKey
-    @AutoIncrement
-    @Column(DataType.BIGINT)
+    @PrimaryGeneratedColumn()
     id!: number;
 
-    @AllowNull(false)
-    @Column(DataType.TEXT)
+    @Column("text")
+    @IsNotEmpty()
     billingAddress!: string;
 
-    @AllowNull(false)
-    @Column(DataType.STRING(50))
+    @Column("varchar")
+    @IsNotEmpty()
     country!: string;
 
-    @AllowNull(false)
-    @Column(DataType.STRING(255))
+    @Column("varchar")
+    @IsNotEmpty()
     billingIdentifier!: string;
 
-    @AllowNull(false)
-    @Column(DataType.STRING(255))
+    @Column("varchar")
+    @IsNotEmpty()
     name!: string;
 
-    @HasMany(() => Hotel)
+    @OneToMany(() => Hotel, hotel => hotel.organization)
+    @JoinColumn()
     hotels?: Hotel[];
 
-    @HasMany(() => User)
+    @OneToMany(() => User, user => user.organization)
+    @JoinColumn()
     users!: User[];
 
 }
