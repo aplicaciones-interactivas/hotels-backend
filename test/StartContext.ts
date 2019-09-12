@@ -2,7 +2,7 @@ import dockerConfiguration from './DockerConfiguration';
 import Mocha from 'mocha';
 import * as fs from "fs";
 import * as path from 'path';
-import {seeder} from './resources/MySql.seeder';
+import {seeder} from './seeders/MySql.seeder';
 
 let cleanExit = 1;
 
@@ -42,7 +42,7 @@ dockerConfiguration.start().then(async () => {
     } finally {
         await dockerConfiguration.stop();
         fs.unlinkSync("./conf/.env.test");
-        process.exit(cleanExit ? 1 : 0);
+        process.exit(cleanExit);
     }
 
 }).catch(err => {
@@ -66,10 +66,6 @@ function recFindByExt(base: string, ext: string, files: string[] | null, result:
                 }
             }
         }
-    )
+    );
     return result
-}
-
-function sleep(ms: number) {
-    return new Promise(resolve => setTimeout(resolve, ms));
 }
