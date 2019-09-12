@@ -26,7 +26,7 @@ class TypeORMProvider {
             database: locals.db.database,
             logging: "all",
             //@ts-ignore
-            entities: [__dirname.replace("provider", "models/*.ts")],
+            entities: [__dirname.replace("provider", "entities/*.ts")],
             synchronize: sync,
             autoSchemaSync: true,
             connectTimeout: 600000,

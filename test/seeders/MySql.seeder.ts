@@ -1,9 +1,9 @@
 import {Connection} from "typeorm";
-import {MealPlan} from "../../app/models/MealPlan";
-import {Bed} from "../../app/models/Bed";
-import {Organization} from "../../app/models/Organization";
-import {Role} from "../../app/models/Role";
-import {User} from "../../app/models/User";
+import {MealPlan} from "../../app/entities/MealPlan";
+import {Bed} from "../../app/entities/Bed";
+import {Organization} from "../../app/entities/Organization";
+import {Role} from "../../app/entities/Role";
+import {User} from "../../app/entities/User";
 
 export async function seeder(connection: Connection) {
     await connection.createQueryBuilder()
