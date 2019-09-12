@@ -67,13 +67,13 @@ export async function seeder(connection: Connection) {
             {
                 id: 1,
                 username: 'edhernandez',
-                password: '$2y$12$S8Qdgk2//.TuObluwUNEdeTpL1N6V8WH.umzzaxzsEeJSBI1f8maS',
+                password: '$2a$08$0752lTehMhXdqqqLgU/pPOneQXNih8NvLU3gfXDH9Hd/WCVXts5Ka',
                 email: 'hernandezed.1991@cvc.com.br'
             },
             {
                 id: 2,
                 username: 'jhondoe',
-                password: '$2y$12$S8Qdgk2//.TuObluwUNEdeTpL1N6V8WH.umzzaxzsEeJSBI1f8maS',
+                password: '$2a$08$0752lTehMhXdqqqLgU/pPOneQXNih8NvLU3gfXDH9Hd/WCVXts5Ka',
                 email: 'jhon.doe@gmail.com'
             }
         ]).execute();

@@ -5,6 +5,7 @@
   "main": "./app/index.ts",
   "author": "Eduardo",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/bluebird": "^3.5.27",
     "@types/body-parser": "^1.17.1",
     "@types/cors": "^2.8.4",
@@ -14,6 +15,7 @@
     "@types/morgan": "^1.7.37",
     "@types/node": "^12.7.2",
     "@types/validator": "^10.11.3",
+    "bcryptjs": "^2.4.3",
     "class-validator": "^0.10.0",
     "cors": "^2.8.5",
     "dotenv-flow": "^3.1.0",
@@ -27,11 +29,12 @@
     "reflect-metadata": "^0.1.13",
     "serve-favicon": "^2.5.0",
     "streamjs": "^1.6.4",
+    "ts-node": "^8.3.0",
     "tslint": "^5.19.0",
     "typeorm": "^0.2.18",
-    "typescript": "^3.6.2",
+    "typescript": "3.4.5",
     "typescript-logging": "^0.6.3",
-    "ts-node": "^8.3.0"
+    "validator": "^11.1.0"
   },
   "devDependencies": {
     "@types/chai": "^4.2.0",
@@ -40,7 +43,7 @@
     "eslint": "^6.2.2",
     "mocha": "^6.2.0",
     "mocha-typescript": "^1.1.17",
-    "testcontainers": "^2.0.0",
+    "testcontainers": "^2.0.0"
   },
   "scripts": {
     "server": "node server.js",

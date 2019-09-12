@@ -23,11 +23,15 @@ export class User {
     @IsNotEmpty()
     email!: string;
 
-    @ManyToOne(() => Organization)
+    @ManyToOne(() => Organization, {
+        eager: true
+    })
     @JoinColumn()
-    organization?: Organization;
+    organization!: Organization;
 
-    @ManyToMany(type => Role)
+    @ManyToMany(type => Role, {
+        eager: true
+    })
     @JoinTable()
     roles!: Role[];
 

@@ -38,6 +38,8 @@ dockerConfiguration.start().then(async () => {
                 cleanExit = unsuccessful;
                 resolve();
             });
+        }).catch(err => {
+            console.log(err);
         })
     } finally {
         await dockerConfiguration.stop();
