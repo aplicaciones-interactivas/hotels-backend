@@ -1,12 +1,13 @@
-import {Connection} from "typeorm";
+import {Connection, getConnection} from "typeorm";
 import {MealPlan} from "../../app/entities/MealPlan";
 import {Bed} from "../../app/entities/Bed";
 import {Organization} from "../../app/entities/Organization";
 import {Role} from "../../app/entities/Role";
 import {User} from "../../app/entities/User";
 
-export async function seeder(connection: Connection) {
-    await connection.createQueryBuilder()
+export async function seeder() {
+
+    await getConnection().createQueryBuilder()
         .insert()
         .into(MealPlan)
         .values([
@@ -22,7 +23,7 @@ export async function seeder(connection: Connection) {
             {name: 'European Plan', description: 'Does not include any meals.', code: 'EP'},
             {name: 'Half Board', description: 'Includes two meals per day.', code: 'HB'},
         ]).execute();
-    await connection.createQueryBuilder()
+    await getConnection().createQueryBuilder()
         .insert()
         .into(Bed)
         .values([
@@ -32,7 +33,7 @@ export async function seeder(connection: Connection) {
             {id: 4, name: 'King Size', code: 'KB'},
         ]).execute();
 
-    await connection.createQueryBuilder()
+    await getConnection().createQueryBuilder()
         .insert()
         .into(Organization)
         .values([
@@ -52,7 +53,7 @@ export async function seeder(connection: Connection) {
             }
         ]).execute();
 
-    await connection.createQueryBuilder()
+    await getConnection().createQueryBuilder()
         .insert()
         .into(Role)
         .values([
@@ -60,7 +61,7 @@ export async function seeder(connection: Connection) {
             {id: 2, roleName: 'USER'}
         ]).execute();
 
-    await connection.createQueryBuilder()
+    await getConnection().createQueryBuilder()
         .insert()
         .into(User)
         .values([
@@ -78,12 +79,12 @@ export async function seeder(connection: Connection) {
             }
         ]).execute();
 
-    await connection.createQueryBuilder()
+    await getConnection().createQueryBuilder()
         .relation(User, "roles")
         .of(1)
         .add(1);
 
-    await connection.createQueryBuilder()
+    await getConnection().createQueryBuilder()
         .relation(User, "organization")
         .of(1)
         .set(1)

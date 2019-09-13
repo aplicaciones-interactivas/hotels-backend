@@ -9,18 +9,16 @@ export class User {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column("varchar")
-    @Length(20)
-    @IsNotEmpty()
+    @Column("varchar", {
+        unique: true,
+        length: 20
+    })
     username!: string;
 
     @Column("varchar")
-    @IsNotEmpty()
     password!: string;
 
     @Column("varchar")
-    @IsEmail()
-    @IsNotEmpty()
     email!: string;
 
     @ManyToOne(() => Organization, {

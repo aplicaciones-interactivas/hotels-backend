@@ -1,7 +1,10 @@
-import {UserRequest} from "../api/request/User.request";
+import {CreateUserRequest} from "../api/request/user/CreateUser.request";
 import UserResponse from "../api/response/User.response";
+import {UpdateUserRequest} from "../api/request/user/UpdateUser.request";
 
 
 export default interface UserService {
-    create(user: UserRequest): Promise<UserResponse>;
+    create(user: CreateUserRequest): Promise<UserResponse>;
+
+    update(id: number, user: UpdateUserRequest): Promise<UserResponse | undefined>;
 }

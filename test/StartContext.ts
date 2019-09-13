@@ -3,6 +3,8 @@ import Mocha from 'mocha';
 import * as fs from "fs";
 import * as path from 'path';
 import {seeder} from './seeders/MySql.seeder';
+import * as chai from "chai";
+import chaiAsPromised from "chai-as-promised";
 
 let cleanExit = 1;
 
@@ -31,8 +33,12 @@ dockerConfiguration.start().then(async () => {
 
         await connection.synchronize(true);
 
-        await seeder(connection);
+        await seeder();
 
+        chai.should();
+        chai.use(chaiAsPromised);
+        chai.config.showDiff = true;
+        chai.config.includeStack = true;
         await new Promise((resolve) => {
             mocha.run(async (unsuccessful) => {
                 cleanExit = unsuccessful;
