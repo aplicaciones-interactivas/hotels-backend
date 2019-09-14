@@ -128,4 +128,28 @@ describe('UserService.update', () => {
         };
         await userService.update(id, userRequest).should.be.rejectedWith(NoSuchElementError);
     });
-})
+});
+
+describe('UserService.findById', () => {
+    it('with valid id, should return user', async () => {
+        await expect(userService.findById(1)).to.eventually.have.property('id').eql(1);
+    });
+
+    it('with invalid id, should return user', async () => {
+        await userService.findById(10000).should.be.rejectedWith(NoSuchElementError);
+    });
+});
+
+describe('UserService.findByOrganizationId', () => {
+    it('with valid organization id, should return all users of organization', async () => {
+        let id = 1;
+        let users = await userService.findByOrganizationId(id);
+        expect(users).to.has.length((await getConnection().createQueryBuilder().from(User, "user").where({organization: {id: id}}).getCount()));
+    });
+    it('with invalid organization id, should return empty list', async () => {
+        let id = 100000;
+        let users = await userService.findByOrganizationId(id);
+        expect(users).to.has.length(0);
+    })
+});
+

@@ -6,10 +6,12 @@ import {Repository} from "typeorm";
 import bcrypt from "bcryptjs";
 import {UpdateUserRequest} from "../../api/request/user/UpdateUser.request";
 import {NoSuchElementError} from "../../error/NoSuchElement.error";
+import {throws} from "assert";
 
 export default class UserServiceImpl implements UserService {
     private ROUNDS_SALT = 8;
     private userRepository: Repository<User>;
+    private noSuchElementByIdMessage = "Unable to find user with id: ";
 
     constructor(userRepository: Repository<User>) {
         this.userRepository = userRepository;
@@ -62,5 +64,24 @@ export default class UserServiceImpl implements UserService {
         return user ? this.toResponse(user) : undefined;
     }
 
+    async findById(id: number): Promise<UserResponse> {
+        let user = await this.userRepository.findOne(id);
+        if (user) {
+            return this.toResponse(user);
+        } else {
+            throw new NoSuchElementError(this.noSuchElementByIdMessage + id);
+        }
+    }
+
+    async findByOrganizationId(organizationId: number): Promise<UserResponse[]> {
+        let users = await this.userRepository.find({
+            where: {
+                organization: {
+                    id: organizationId
+                }
+            }
+        });
+        return users.map(this.toResponse);
+    }
 
 }
