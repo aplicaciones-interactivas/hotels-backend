@@ -1,7 +1,9 @@
 import {ExpirationStrategy, RedisStorage, MemoryStorage} from "node-ts-cache";
 import {LocalsProvider} from "./Locals.provider";
+import {injectable} from "inversify";
 
-class CacheProvider {
+@injectable()
+export class CacheProvider {
 
     strategy?: ExpirationStrategy;
 
@@ -21,5 +23,3 @@ class CacheProvider {
         return this.strategy;
     }
 }
-
-export default new CacheProvider();

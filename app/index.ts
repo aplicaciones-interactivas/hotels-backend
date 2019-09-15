@@ -1,10 +1,14 @@
-import applicationProvider from "./provider/Application.provider";
-import sequelizeProvider from './provider/TypeORM.provider';
-import cacheProvider from './provider/Cache.provider';
-import passport from './provider/Passport';
+import {ApplicationProvider} from "./provider/Application.provider";
+import {TypeORMProvider} from './provider/TypeORM.provider';
+import {CacheProvider} from './provider/Cache.provider';
+import {PassportProvider} from './provider/Passport.provider';
+import {ContainerProvider} from "./provider/Container.provider";
 
-applicationProvider.loadServer();
-sequelizeProvider.startDatabase();
-cacheProvider.startCache();
-passport.initAuth();
+(async () => {
+    let container = new ContainerProvider().provide();
+    await new TypeORMProvider().startDatabase();
+    new CacheProvider().startCache();
+    new ApplicationProvider().loadServer();
+    container.resolve(PassportProvider).init();
+})();
 

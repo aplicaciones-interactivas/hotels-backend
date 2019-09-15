@@ -1,25 +1,27 @@
-import UserService from "../User.service";
+import {UserService} from "../User.service";
 import {CreateUserRequest} from "../../api/request/user/CreateUser.request";
 import UserResponse from "../../api/response/User.response";
 import {User} from "../../entities/User";
 import {Repository} from "typeorm";
-import bcrypt from "bcryptjs";
 import {UpdateUserRequest} from "../../api/request/user/UpdateUser.request";
 import {NoSuchElementError} from "../../error/NoSuchElement.error";
-import {throws} from "assert";
+import {BCryptUtils} from "../../utils/BCrypt.utils";
+import {inject, injectable} from "inversify";
+import {UserRepository} from "../../repository/User.repository";
 
+@injectable()
 export default class UserServiceImpl implements UserService {
-    private ROUNDS_SALT = 8;
     private userRepository: Repository<User>;
     private noSuchElementByIdMessage = "Unable to find user with id: ";
+    private noSuchElementByUsernameOrEmailMessage = "Unable to find user with param: ";
 
-    constructor(userRepository: Repository<User>) {
+    constructor(@inject(UserRepository) userRepository: UserRepository) {
         this.userRepository = userRepository;
     }
 
     async create(userRequest: CreateUserRequest): Promise<UserResponse> {
         let user: any = this.userRepository.create(userRequest);
-        user.password = await this.hashPassword(user.password);
+        user.password = BCryptUtils.hash(userRequest.password);
         let id = await this.userRepository.createQueryBuilder().insert().values(user).execute();
         user.id = id.raw.insertId;
         await this.userRepository.createQueryBuilder().relation(User, "roles").of(user).add(userRequest.rolesId);
@@ -28,22 +30,22 @@ export default class UserServiceImpl implements UserService {
         return this.toResponse(user);
     }
 
-    async hashPassword(password: string): Promise<string> {
-        let salt = await bcrypt.genSalt(this.ROUNDS_SALT);
-        return await bcrypt.hash(password, salt);
-    }
-
     private toResponse(user: User): UserResponse {
-        return {
+        let userResponse: UserResponse = {
             id: user.id,
             email: user.email,
-            organizationId: user.organization.id,
             password: user.password,
+            username: user.username,
             rolesId: user.roles.map((rol) => {
                 return {id: rol.id, roleName: rol.roleName}
-            }),
-            username: user.username
+            })
+        };
+
+        if (user.organization) {
+            userResponse.organizationId = user.organization.id;
         }
+
+        return userResponse;
     }
 
     async update(id: number, userRequest: UpdateUserRequest): Promise<UserResponse | undefined> {
@@ -54,11 +56,11 @@ export default class UserServiceImpl implements UserService {
                     user.email = userRequest.email;
                 }
                 if (userRequest.password) {
-                    user.password = await this.hashPassword(userRequest.password);
+                    user.password = BCryptUtils.hash(userRequest.password);
                 }
                 return this.toResponse(await this.userRepository.save(user));
             } else {
-                throw new NoSuchElementError("Unable to find user with id: " + id);
+                throw new NoSuchElementError(this.noSuchElementByIdMessage + id);
             }
         }
         return user ? this.toResponse(user) : undefined;
@@ -82,6 +84,17 @@ export default class UserServiceImpl implements UserService {
             }
         });
         return users.map(this.toResponse);
+    }
+
+    async findByUsernameOrEmail(param: string): Promise<UserResponse> {
+        let user = (await this.userRepository.find({
+            where: [{username: param}, {email: param}]
+        }))[0];
+        if (user) {
+            return this.toResponse(user);
+        } else {
+            throw new NoSuchElementError(this.noSuchElementByUsernameOrEmailMessage + param);
+        }
     }
 
 }

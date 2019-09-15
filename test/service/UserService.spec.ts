@@ -1,21 +1,20 @@
 import "mocha";
 import {CreateUserRequest} from "../../app/api/request/user/CreateUser.request";
 import {User} from "../../app/entities/User";
-import UserService from "../../app/services/User.service";
+import {UserService} from "../../app/services/User.service";
 import UserServiceImpl from "../../app/services/impl/User.service.impl";
-import {getConnection, getRepository} from "typeorm";
+import {getConnection, getCustomRepository, getRepository} from "typeorm";
 import {Repository} from "typeorm";
 import bcrypt from "bcryptjs"
 import {expect} from "chai";
 import {UpdateUserRequest} from "../../app/api/request/user/UpdateUser.request";
 import {Organization} from "../../app/entities/Organization";
 import {Role} from "../../app/entities/Role";
-import {seeder} from "../seeders/MySql.seeder";
-import UserResponse from "../../app/api/response/User.response";
 import {NoSuchElementError} from "../../app/error/NoSuchElement.error";
-import {ValidationError} from "class-validator";
+import UserResponse from "../../app/api/response/User.response";
+import {UserRepository} from "../../app/repository/User.repository";
 
-const r: Repository<User> = getRepository(User);
+const r: UserRepository = getCustomRepository(UserRepository);
 const userService: UserService = new UserServiceImpl(r);
 
 describe("UserService.create", () => {
@@ -44,7 +43,7 @@ describe("UserService.create", () => {
         };
         await userService.create(user);
         let before = await getConnection().createQueryBuilder().select("user").from(User, "user").getCount();
-        await userService.create(user).catch(err => {
+        await userService.create(user).catch((err: any) => {
             expect(err.constructor.name).eql("QueryFailedError");
         });
         let after = await getConnection().createQueryBuilder().select("user").from(User, "user").getCount();
@@ -150,6 +149,26 @@ describe('UserService.findByOrganizationId', () => {
         let id = 100000;
         let users = await userService.findByOrganizationId(id);
         expect(users).to.has.length(0);
-    })
+    });
 });
 
+describe('UserService.findByUsernameOrEmail', () => {
+    it('with valid username must return user', async () => {
+        let username = "jhondoe";
+        let user: UserResponse = await userService.findByUsernameOrEmail(username);
+        expect(user.username).eql(username);
+    });
+
+    it('with invalid username should throw error', async () => {
+        await userService.findByUsernameOrEmail("invalidusername").should.be.rejectedWith(NoSuchElementError);
+    });
+
+    it('with valid email must return user', async () => {
+        let email = "jhon.doe@gmail.com";
+        let user: UserResponse = await userService.findByUsernameOrEmail(email);
+        expect(user.email).eql(email);
+    });
+    it('with invalid email must return user', async () => {
+        await userService.findByUsernameOrEmail("jhon.doe.invalid@gmail.com").should.be.rejectedWith(NoSuchElementError);
+    });
+});

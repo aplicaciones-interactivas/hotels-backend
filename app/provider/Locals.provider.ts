@@ -26,6 +26,7 @@ export class LocalsProvider {
         const cacheUsername = process.env.REDIS_USERNAME || undefined;
         const cachePassword = process.env.REDIS_PASSWORD || undefined;
         const logLevel = process.env.LOG_LEVEL || 'Debug';
+        const jwtSecret = process.env.JWT_SECRET;
 
         return {
             url,
@@ -46,7 +47,8 @@ export class LocalsProvider {
                 redisPassword: cachePassword,
                 redisPort: cachePort,
                 redisUsername: cacheUsername
-            }
+            },
+            jwtsecret: jwtSecret
         }
     }
 
