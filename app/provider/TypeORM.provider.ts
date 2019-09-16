@@ -3,10 +3,18 @@ import {LoggerProvider} from './Logger.provider'
 import {Connection, ConnectionOptions, createConnection, QueryRunner} from "typeorm";
 import {Logger} from "typescript-logging";
 import {Logger as TypeORMLogger} from "typeorm";
+import {injectable} from "tsyringe";
 
+@injectable()
 export class TypeORMProvider {
     _connection !: Connection;
-    logger: Logger = LoggerProvider.getLogger(TypeORMProvider.name);
+    logger: Logger;
+    loggerProvider: LoggerProvider;
+
+    constructor(loggerProvider: LoggerProvider) {
+        this.logger = loggerProvider.getLogger(TypeORMProvider.name);
+        this.loggerProvider = loggerProvider;
+    }
 
     public async startDatabase(): Promise<Connection> {
         const locals = LocalsProvider.getConfig();
@@ -22,7 +30,7 @@ export class TypeORMProvider {
             //@ts-ignore
             entities: [__dirname.replace("provider", "entities/*.ts")],
             connectTimeout: 600000,
-            logger: new CustomLogger()
+            logger: new CustomLogger(this.loggerProvider)
         };
         this.logger.debug("Waiting for " + locals.db.dbDialect + " is ready for accept transactions");
         for (; ;) {
@@ -49,7 +57,11 @@ export class TypeORMProvider {
 }
 
 class CustomLogger implements TypeORMLogger {
-    logger: Logger = LoggerProvider.getLogger("TypeORM");
+    logger: Logger;
+
+    constructor(loggerProvider: LoggerProvider) {
+        this.logger = loggerProvider.getLogger("TypeORM");
+    }
 
     log(level: "log" | "info" | "warn", message: any, queryRunner?: QueryRunner): any {
         if (level == "log" || level == "info") {
@@ -80,5 +92,3 @@ class CustomLogger implements TypeORMLogger {
     }
 
 }
-
-export default new TypeORMProvider();

@@ -1,14 +1,11 @@
-import {Container} from "inversify";
-import {UserService} from "../services/User.service";
-import UserServiceImpl from "../services/impl/User.service.impl";
-import {UserRepository} from "../repository/User.repository";
-import {getCustomRepository} from "typeorm";
+import {container} from "tsyringe";
+import {LFService, LoggerFactory, LoggerFactoryOptions, LogGroupRule, LogLevel} from "typescript-logging";
+import {LocalsProvider} from "./Locals.provider";
 
 export class ContainerProvider {
-    public provide(): Container {
-        let container: Container = new Container();
-        container.bind<UserService>("UserService").to(UserServiceImpl);
-        container.bind<UserRepository>("UserRepository").toDynamicValue(() => getCustomRepository(UserRepository)).inSingletonScope();
-        return container;
+
+    constructor() {
+        container.register<LoggerFactory>("LoggerFactory", {useValue: LFService.createNamedLoggerFactory('SubLoggerFactory', new LoggerFactoryOptions().addLogGroupRule(new LogGroupRule(new RegExp(""), LogLevel.fromString("Debug"))))})
     }
+
 }

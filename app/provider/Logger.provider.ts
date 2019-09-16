@@ -1,17 +1,18 @@
 import {LFService, LoggerFactory, LoggerFactoryOptions, LogGroupRule, LogLevel} from "typescript-logging";
 import {LocalsProvider} from "./Locals.provider";
+import {injectable} from "tsyringe";
 
+@injectable()
 export class LoggerProvider {
 
-    static options = new LoggerFactoryOptions().addLogGroupRule(new LogGroupRule(new RegExp(""), LogLevel.fromString(LocalsProvider.getConfig().logLevel)));
-    static factory: LoggerFactory = LFService.createNamedLoggerFactory('LoggerFactory', LoggerProvider.options);
+    factory: LoggerFactory;
 
-    public static getLogger(instanceName: string) {
-        return LoggerProvider.factory.getLogger(instanceName);
+    constructor(loggerFactory: LoggerFactory) {
+        this.factory = loggerFactory;
     }
 
     public getLogger(instanceName: string) {
-        return LoggerProvider.factory.getLogger(instanceName);
+        return this.factory.getLogger(instanceName);
     }
 }
 
