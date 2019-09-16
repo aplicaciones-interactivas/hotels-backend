@@ -1,11 +1,11 @@
 import expressProvider from './Express.provider';
 import {LocalsProvider} from './Locals.provider';
-import {injectable} from "inversify";
+class ApplicationProvider {
 
-@injectable()
-export class ApplicationProvider {
     public loadServer (): void {
         LocalsProvider.config();
         expressProvider.provide();
     }
 }
+
+export default new ApplicationProvider();

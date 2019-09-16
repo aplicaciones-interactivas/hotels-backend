@@ -9,5 +9,9 @@ export class LoggerProvider {
     public static getLogger(instanceName: string) {
         return LoggerProvider.factory.getLogger(instanceName);
     }
+
+    public getLogger(instanceName: string) {
+        return LoggerProvider.factory.getLogger(instanceName);
+    }
 }
 

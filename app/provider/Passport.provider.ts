@@ -10,14 +10,13 @@ import UserResponse from "../api/response/User.response";
 import {AuthenticationError} from "../error/Authentication.error";
 import {Logger} from "typescript-logging";
 import {LoggerProvider} from "./Logger.provider";
-import {inject} from "inversify";
 
 export class PassportProvider {
     private logger: Logger = LoggerProvider.getLogger(PassportProvider.name);
     userService: UserService;
     express: Express;
 
-    constructor(@inject("UserService") userService: UserService, @inject("Express") express: Express) {
+    constructor(userService: UserService, express: Express) {
         this.userService = userService;
         this.express = express;
     }

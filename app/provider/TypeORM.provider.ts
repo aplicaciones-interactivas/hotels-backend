@@ -3,14 +3,12 @@ import {LoggerProvider} from './Logger.provider'
 import {Connection, ConnectionOptions, createConnection, QueryRunner} from "typeorm";
 import {Logger} from "typescript-logging";
 import {Logger as TypeORMLogger} from "typeorm";
-import {injectable} from "inversify";
 
-@injectable()
 export class TypeORMProvider {
     _connection !: Connection;
     logger: Logger = LoggerProvider.getLogger(TypeORMProvider.name);
 
-    public async startDatabase(sync?: boolean): Promise<Connection> {
+    public async startDatabase(): Promise<Connection> {
         const locals = LocalsProvider.getConfig();
         let opts: ConnectionOptions = {
             //@ts-ignore
@@ -23,8 +21,6 @@ export class TypeORMProvider {
             logging: "all",
             //@ts-ignore
             entities: [__dirname.replace("provider", "entities/*.ts")],
-            synchronize: sync,
-            autoSchemaSync: true,
             connectTimeout: 600000,
             logger: new CustomLogger()
         };
@@ -53,7 +49,7 @@ export class TypeORMProvider {
 }
 
 class CustomLogger implements TypeORMLogger {
-    logger: Logger = LoggerProvider.getLogger(TypeORMProvider.name);
+    logger: Logger = LoggerProvider.getLogger("TypeORM");
 
     log(level: "log" | "info" | "warn", message: any, queryRunner?: QueryRunner): any {
         if (level == "log" || level == "info") {
@@ -84,3 +80,5 @@ class CustomLogger implements TypeORMLogger {
     }
 
 }
+
+export default new TypeORMProvider();

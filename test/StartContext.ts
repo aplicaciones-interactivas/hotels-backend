@@ -5,10 +5,6 @@ import * as path from 'path';
 import {seeder} from './seeders/MySql.seeder';
 import * as chai from "chai";
 import chaiAsPromised from "chai-as-promised";
-import {ContainerProvider} from "../app/provider/Container.provider";
-import {ApplicationProvider} from "../app/provider/Application.provider";
-import {CacheProvider} from "../app/provider/Cache.provider";
-import {TypeORMProvider} from "../app/provider/TypeORM.provider";
 
 let cleanExit = 1;
 
@@ -30,10 +26,9 @@ dockerConfiguration.start().then(async () => {
         content = content.replace('{{redis_port}}', dockerConfiguration.redisPort.toString());
 
         fs.writeFileSync('./conf/.env.test', content);
-        let container = new ContainerProvider().provide();
-        container.resolve(ApplicationProvider).loadServer();
-        container.resolve(CacheProvider).startCache();
-        let connection = await container.resolve(TypeORMProvider).startDatabase();
+        require("../app/provider/Application.provider").default.loadServer();
+        require('../app/provider/Cache.provider').default.startCache();
+        let connection: any = await require('../app/provider/TypeORM.provider').default.startDatabase();
 
         await connection.synchronize(true);
 

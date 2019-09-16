@@ -6,16 +6,14 @@ import {Repository} from "typeorm";
 import {UpdateUserRequest} from "../../api/request/user/UpdateUser.request";
 import {NoSuchElementError} from "../../error/NoSuchElement.error";
 import {BCryptUtils} from "../../utils/BCrypt.utils";
-import {inject, injectable} from "inversify";
 import {UserRepository} from "../../repository/User.repository";
 
-@injectable()
 export default class UserServiceImpl implements UserService {
     private userRepository: Repository<User>;
     private noSuchElementByIdMessage = "Unable to find user with id: ";
     private noSuchElementByUsernameOrEmailMessage = "Unable to find user with param: ";
 
-    constructor(@inject(UserRepository) userRepository: UserRepository) {
+    constructor(userRepository: UserRepository) {
         this.userRepository = userRepository;
     }
 
